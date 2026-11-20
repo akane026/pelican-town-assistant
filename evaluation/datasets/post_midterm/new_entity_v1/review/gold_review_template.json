@@ -1,0 +1,22 @@
+{
+  "dataset_hash": "b7430f5a24d0c079e325667607c5a99f8924228a8d493a92e00a36666330b1dd",
+  "protocol_hash": "bd2d0906b1a60ff656ac5710643e842deb4027b143d5612caa1ff5815a71e4b1",
+  "review_kind": "evaluation_gold",
+  "reviews": [
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "e2a383f3d19228617ff6301a2f99253687357d6a27c190fbafcbde16d69c38cd",
+      "case_id": "NEW-01",
+      "decision": null,
+      "goals_checked": [
+        "sale"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    }
+  ],
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "source_hash": "d6dda1ae1d757341dd0e0f18c29c393d87ed84b7abe90850da500e0f764d3591"
+}

@@ -1,0 +1,12 @@
+{
+ "version":"v3.1", "status":"PRE_REGISTERED_ENGINEERING_PROTOCOL_GOLD_PENDING",
+ "source_groups":"configs/corpus.json",
+ "construction":["K0_structural","K1_visual_alignment","K1_missing_pixels","K1_swapped_pixels","K1_no_context"],
+ "retrieval":["A","A+","B","BQ","C","D"],
+ "budgets":{"pages":5,"candidate_entities":30,"edge_reads":120,"hops":3,"final_records":12,"images":4,"unicode_chars":6000},
+ "gold_policy":"Annotate from source-page units, including missed predictions. Assistant checks, model checks and user approvals remain distinct. No production release or formal success before required approval.",
+ "visual_split":"Preserve legacy screenshot-source groups as diagnostic only; all crops of one screenshot share split. No new independent screenshots yet.",
+ "formal_distribution":{"knowledge":12,"calculation":12,"composition":14,"visual":8,"multiturn":8,"unsupported":6},
+ "metrics":["alignment_precision","alignment_recall","role_confusion","relation_direction","source_validity","evidence_completeness","task_success","wrong_auto_accept","clarification_count","latency","memory","model_calls"],
+ "effect_thresholds":"pending independent validation; do not tune on formal test"
+}

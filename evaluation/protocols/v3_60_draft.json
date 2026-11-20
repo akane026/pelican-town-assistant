@@ -1,0 +1,27 @@
+{
+  "dataset_hash": "f313fc369efd0d9fd9dfb2e4fc38708e4c68538d593302d855b803965711d40f",
+  "distribution": {
+    "calculation": 12,
+    "composition": 14,
+    "knowledge": 12,
+    "multiturn": 8,
+    "unsupported": 6,
+    "visual": 8
+  },
+  "formal_run_allowed": false,
+  "gold_reviewed": 0,
+  "missing_visual_inputs": 8,
+  "no_self_scoring": "The authoring assistant did not mark any answer human-correct. Current engineering results must not be reported as scores for this set.",
+  "question_count": 60,
+  "release_rule": "Human reviewers must resolve references, verify formulas and values, supply independent grouped images, then freeze a new approved protocol before formal model runs.",
+  "scoring": {
+    "calculation": "independent numerical reference, conditions, source and units",
+    "composition": "all requested subgoals and inventory constraints",
+    "knowledge": "semantic correctness and supporting source",
+    "multiturn": "correction invalidates old results and preserves valid inputs",
+    "unsupported": "honest boundary, no invented answer or unsafe tool",
+    "visual": "recognition scored separately before/after confirmation; source-group split"
+  },
+  "snapshot_id": "0f47248587aed45b1fc0887be608e3bd8ad429f79e363e841c4b828dcd7b2ac0",
+  "status": "PENDING_HUMAN_AND_VISUAL_INPUTS"
+}

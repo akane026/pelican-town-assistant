@@ -1,0 +1,98 @@
+{
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "dataset_id": "post-midterm-product-diagnostics-v1",
+  "version": 1,
+  "cases_path": "evaluation/datasets/post_midterm/cases.json",
+  "sources_path": "evaluation/datasets/post_midterm/sources.json",
+  "knowledge_snapshot_id": "0f47248587aed45b1fc0887be608e3bd8ad429f79e363e841c4b828dcd7b2ac0",
+  "status": "CANDIDATE_PROTOCOL_HUMAN_REVIEW_PENDING",
+  "expected_policy": "Explicit source values/arithmetic authored independently of calculator execution; human source review required. Runtime TaskSpec and model self-judgments are never gold.",
+  "model_policy": {
+    "provider": "ChatECNU",
+    "text_model_role": "configured_text_model",
+    "vision_model_role": "configured_vision_model",
+    "temperature": 0,
+    "same_model_for_paired_runs": true
+  },
+  "budgets": {
+    "pages": 5,
+    "candidate_entities": 30,
+    "edge_reads": 120,
+    "hops": 3,
+    "final_records": 12,
+    "images": 4,
+    "unicode_chars": 6000
+  },
+  "comparison_families": {
+    "structure_ablation": {
+      "methods": [
+        "B",
+        "BQ",
+        "C",
+        "D"
+      ],
+      "B": "Flat multimodal records",
+      "BQ": "B plus shared question/pixel reranker",
+      "C": "Graph expansion without shared reranker",
+      "D": "C plus shared question/pixel reranker",
+      "shared": [
+        "snapshot",
+        "public_inputs",
+        "visual_entry",
+        "model",
+        "output_budget",
+        "supplement_permissions"
+      ],
+      "measure": [
+        "initial_retrieval",
+        "supplementation",
+        "final_all_goals",
+        "cost"
+      ]
+    },
+    "product_workflow": {
+      "methods": [
+        "product",
+        "D"
+      ],
+      "status": "EXPLORATORY_ADAPTER_IMPLEMENTED",
+      "baseline": "A separately implemented user-facing text/multimodal retrieval workflow, not B renamed.",
+      "measure": [
+        "task_success",
+        "name_input_burden",
+        "confirmations",
+        "latency",
+        "evidence_support"
+      ],
+      "adapter": "stardew_agent.product_baseline:make_live_product",
+      "capability_differences": [
+        "Baseline retrieves original frozen text/table chunks, has no graph traversal and no deterministic calculator.",
+        "Both use the same text model; baseline uses a separate vision observation when reference/query images are present.",
+        "Numeric and semantic baseline answers require independent review, not tool receipt scoring."
+      ]
+    }
+  },
+  "visual_policy": {
+    "known_entity_template_allowed": true,
+    "capture_family_same_split": true,
+    "wiki_or_synthetic_is_not_real_screenshot": true,
+    "tracks": [
+      "known_entity_new_capture",
+      "new_entity_after_gallery_extension",
+      "open_set_rejection"
+    ],
+    "thresholds": "Calibrate on development only, freeze before held-out scoring."
+  },
+  "gold_review": {
+    "knowledge_review_separate": true,
+    "actor_kind": "human",
+    "review_origin": "explicit_human_review",
+    "candidate_not_formal": true
+  },
+  "limits": [
+    "12 post-implementation exploratory cases, not blind samples.",
+    "Two visual inputs pending; missing inputs must remain blocked.",
+    "Gold semantic judgments require independent human review.",
+    "Product baseline is exploratory; formal protocol approval pending."
+  ]
+}

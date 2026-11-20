@@ -1,0 +1,23 @@
+{
+  "dataset_hash": "894f11f48bb98ccf77e4e69977b21bcb5f74e6ca65c8c8214a49196185381fcd",
+  "protocol_hash": "54f2adb16e820150c8ae9f348aa1553e8e3d11261927f3342758c292b03b42b5",
+  "review_kind": "evaluation_gold",
+  "reviews": [
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "d0ce1ee846d4ad3b389bc2929efee996fbe4ad8e2a63f085cd20911c83effc15",
+      "case_id": "OPEN-01",
+      "decision": null,
+      "goals_checked": [
+        "wine",
+        "jelly"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    }
+  ],
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "source_hash": "fdfdb8bbce87404f1c89573ff15a125c336108d849405ddc5b0eff951743c249"
+}

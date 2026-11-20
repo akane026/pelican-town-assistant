@@ -1,0 +1,82 @@
+[
+  {
+    "id": "source:Parsnip",
+    "kind": "text_source",
+    "page_id": "Parsnip",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Parsnip&oldid=191123",
+    "revision_id": "191123",
+    "raw_path": "verification/data/raw/Parsnip-dom-e23d514da191.html",
+    "sha256": "e23d514da1912686781b433b6019b820f93ff29354b36e075dcd4c6d2cdc0aa8",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Melon",
+    "kind": "text_source",
+    "page_id": "Melon",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Melon&oldid=193510",
+    "revision_id": "193510",
+    "raw_path": "verification/data/raw/Melon-dom-56a923fcab7b.html",
+    "sha256": "56a923fcab7b189624a98081b86bd240be895bde3e4802baac19a2d64b0b32e7",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Crops",
+    "kind": "text_source",
+    "page_id": "Crops",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Crops&oldid=193979",
+    "revision_id": "193979",
+    "raw_path": "verification/data/raw/Crops-dom-5a30441584cf.html",
+    "sha256": "5a30441584cf11490c79a3c407c5a73ee1634a121acef0a1434c3360e0ec806f",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Bundles",
+    "kind": "text_source",
+    "page_id": "Bundles",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Bundles&oldid=195448",
+    "revision_id": "195448",
+    "raw_path": "verification/data/raw/Bundles-dom-51fd2ef79498.html",
+    "sha256": "51fd2ef79498f7b40fdf8b92fb335834ed3998bc1dc28ea1c3cefd18d118a648",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Wine",
+    "kind": "text_source",
+    "page_id": "Wine",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Wine&oldid=192625",
+    "revision_id": "192625",
+    "raw_path": "verification/data/raw/Wine-dom-db0067e5c013.html",
+    "sha256": "db0067e5c0130a8283871118653cf611548174cf1ca1f9c23e67996c185bea77",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Jellies_and_Pickles",
+    "kind": "text_source",
+    "page_id": "Jellies_and_Pickles",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Jellies_and_Pickles&oldid=191929",
+    "revision_id": "191929",
+    "raw_path": "verification/data/raw/Jellies_and_Pickles-dom-ca2a4063cc0b.html",
+    "sha256": "ca2a4063cc0beb3f7c960e6153844017784c16f6b1ec7abc84c7c9a06f30fa3e",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Kale",
+    "kind": "text_source",
+    "page_id": "Kale",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Kale&oldid=192520",
+    "revision_id": "192520",
+    "raw_path": "data/raw/Kale-dc472030504f.html",
+    "sha256": "dc472030504ffbf15f6e8a0952faa97da56ae19840fe22975a1369d644e232a6",
+    "review_status": "PENDING_HUMAN"
+  },
+  {
+    "id": "source:Garlic",
+    "kind": "text_source",
+    "page_id": "Garlic",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Garlic&oldid=190334",
+    "revision_id": "190334",
+    "raw_path": "data/raw/Garlic-e3bd4859c989.html",
+    "sha256": "e3bd4859c9898ca75e1ebd61901d8c384d4527df5e343eadb8f6ff3a6d9d1de1",
+    "review_status": "PENDING_HUMAN"
+  }
+]

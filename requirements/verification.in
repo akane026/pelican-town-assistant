@@ -1,0 +1,9 @@
+# Direct dependencies for the feasibility probes, not the final application.
+# Semantica release API must be checked against v0.7.0, not main.
+semantica==0.7.0
+beautifulsoup4
+lxml
+httpx
+Pillow
+PyYAML
+pytest

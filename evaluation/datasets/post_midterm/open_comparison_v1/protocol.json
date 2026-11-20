@@ -1,0 +1,105 @@
+{
+  "budgets": {
+    "candidate_entities": 30,
+    "edge_reads": 120,
+    "final_records": 12,
+    "hops": 3,
+    "images": 4,
+    "pages": 5,
+    "unicode_chars": 6000
+  },
+  "cases_path": "evaluation/datasets/post_midterm/open_comparison_v1/cases.json",
+  "comparison_families": {
+    "product_workflow": {
+      "adapter": "stardew_agent.product_baseline:make_live_product",
+      "baseline": "A separately implemented user-facing text/multimodal retrieval workflow, not B renamed.",
+      "capability_differences": [
+        "Baseline retrieves original frozen text/table chunks, has no graph traversal and no deterministic calculator.",
+        "Both use the same text model; baseline uses a separate vision observation when reference/query images are present.",
+        "Numeric and semantic baseline answers require independent review, not tool receipt scoring."
+      ],
+      "measure": [
+        "task_success",
+        "name_input_burden",
+        "confirmations",
+        "latency",
+        "evidence_support"
+      ],
+      "methods": [
+        "product",
+        "D"
+      ],
+      "status": "EXPLORATORY_ADAPTER_IMPLEMENTED"
+    },
+    "structure_ablation": {
+      "B": "Flat multimodal records",
+      "BQ": "B plus shared question/pixel reranker",
+      "C": "Graph expansion without shared reranker",
+      "D": "C plus shared question/pixel reranker",
+      "measure": [
+        "initial_retrieval",
+        "supplementation",
+        "final_all_goals",
+        "cost"
+      ],
+      "methods": [
+        "B",
+        "BQ",
+        "C",
+        "D"
+      ],
+      "shared": [
+        "snapshot",
+        "public_inputs",
+        "visual_entry",
+        "model",
+        "output_budget",
+        "supplement_permissions"
+      ]
+    }
+  },
+  "dataset_id": "post-midterm-open-comparison-development-v1",
+  "declared_at": "2026-11-17T13:16:17.610749+00:00",
+  "expected_policy": "Explicit source values/arithmetic authored independently of calculator execution; human source review required. Runtime TaskSpec and model self-judgments are never gold.",
+  "gold_review": {
+    "actor_kind": "human",
+    "candidate_not_formal": true,
+    "knowledge_review_separate": true,
+    "review_origin": "explicit_human_review"
+  },
+  "knowledge_snapshot_id": "7269cd40e0c27ac8a0024bd0db5f10f75687b6a6bd1d6726b49f6c79b7a9b269",
+  "limits": [
+    "Post-implementation development check; no independent gold or formal accuracy claim.",
+    "Product names not supplied in public input; selections must have current evidence provenance.",
+    "Expected values from frozen original quotes and manual arithmetic, never calculator execution.",
+    "Human source and answer review pending."
+  ],
+  "model_policy": {
+    "provider": "ChatECNU",
+    "same_model_for_paired_runs": true,
+    "temperature": 0,
+    "text_model_role": "configured_text_model",
+    "vision_model_role": "configured_vision_model"
+  },
+  "parent_protocol_hashes": {
+    "cases": "c0a7970b7a9efb06a44a350174d2e6191160bdc4295368054615895b518bb594",
+    "protocol": "62447f9ac79c0b0879cbefff443cf829f6709c8b14274e4d7ad3908c4416123a",
+    "sources": "3cce68a7e1a0560f40c7d7f36e34fcfb75539ed9389acac5da7bce85f512fd3f"
+  },
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "sources_path": "evaluation/datasets/post_midterm/open_comparison_v1/sources.json",
+  "status": "CANDIDATE_INPUTS_AVAILABLE_HUMAN_REVIEW_PENDING",
+  "version": 1,
+  "visual_policy": {
+    "capture_family_same_split": true,
+    "known_entity_template_allowed": true,
+    "query_set_scope": "diagnostic_reused_capture",
+    "thresholds": "Calibrate on development only, freeze before held-out scoring.",
+    "tracks": [
+      "known_entity_new_capture",
+      "new_entity_after_gallery_extension",
+      "open_set_rejection"
+    ],
+    "wiki_or_synthetic_is_not_real_screenshot": true
+  }
+}

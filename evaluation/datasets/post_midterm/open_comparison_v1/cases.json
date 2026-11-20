@@ -1,0 +1,63 @@
+[
+  {
+    "category": "open_comparison",
+    "claim_scope": "exploratory_development",
+    "expected_goals": [
+      {
+        "description": "Original formula and independent arithmetic: Wine 2×(3×250)=1500; Jelly 2×(2×250+50)=1100; direct 2×250=500. No game action.",
+        "expected_outputs": {
+          "raw_opportunity_cost_g": 500,
+          "sales_g": 1500
+        },
+        "expected_params": {
+          "entity_id": "entity:Melon",
+          "product_id": "entity:Wine",
+          "profession": "none",
+          "quality": "normal",
+          "quantity": 2
+        },
+        "id": "wine",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "processing_value",
+        "turn": 0
+      },
+      {
+        "description": "Original formula and independent arithmetic: Wine 2×(3×250)=1500; Jelly 2×(2×250+50)=1100; direct 2×250=500. No game action.",
+        "expected_outputs": {
+          "raw_opportunity_cost_g": 500,
+          "sales_g": 1100
+        },
+        "expected_params": {
+          "entity_id": "entity:Melon",
+          "product_id": "entity:Jelly",
+          "profession": "none",
+          "quality": "normal",
+          "quantity": 2
+        },
+        "id": "jelly",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "processing_value",
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "OPEN-01",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Melon",
+      "source:Keg",
+      "source:Preserves_Jar"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "我有2个普通甜瓜，无职业加成。请从已有知识里找出可支持的加工产物，并分别比较它们的最终出售总额和直接出售原料的总额；仅比较有完整依据的方案，不考虑加工时间，不修改库存。",
+        "requires_image": false
+      }
+    ]
+  }
+]

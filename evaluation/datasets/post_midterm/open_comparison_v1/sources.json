@@ -1,0 +1,32 @@
+[
+  {
+    "id": "source:Melon",
+    "kind": "text_evidence",
+    "locator": "table[2]/row[2]/cell[0]",
+    "path": "verification/data/raw/Melon-dom-56a923fcab7b.html",
+    "quote": "250g 312g 375g 500g",
+    "review_status": "PENDING_HUMAN",
+    "sha256": "56a923fcab7b189624a98081b86bd240be895bde3e4802baac19a2d64b0b32e7",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Melon&oldid=193510"
+  },
+  {
+    "id": "source:Keg",
+    "kind": "text_evidence",
+    "locator": "table[1]: Wine",
+    "path": "verification/data/raw/Keg-dom-2d393a237f8a.html",
+    "quote": " Wine Drink in moderation. Any Fruit (1) 10000 mins (6.25 Days) 3 × Fruit Base Price 1.75 × Base Fruit Energy 1.75 × Base Fruit Health Speed (−1)",
+    "review_status": "PENDING_HUMAN",
+    "sha256": "2d393a237f8ad7ca115cce4f2018dd4631a5a81a2e1d34fb05c0028a60108d4b",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Keg&oldid=195253"
+  },
+  {
+    "id": "source:Preserves_Jar",
+    "kind": "text_evidence",
+    "locator": "table[1]: Jelly",
+    "path": "verification/data/raw/Preserves_Jar-dom-ea8d11e0bd16.html",
+    "quote": " Jelly Gooey. Any fruit (1) 4000m (2-3 days) 2 × Base Fruit Price + 50 2 × Base Fruit Energy 2 × Base Fruit Health",
+    "review_status": "PENDING_HUMAN",
+    "sha256": "ea8d11e0bd16a2e1550e55bfa2eb0a2d3673a520309ad1caa7a7b1051e91d93a",
+    "url": "https://stardewvalleywiki.com/mediawiki/index.php?title=Preserves_Jar&oldid=195389"
+  }
+]

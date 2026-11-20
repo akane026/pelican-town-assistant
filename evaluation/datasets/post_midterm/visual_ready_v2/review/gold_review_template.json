@@ -1,0 +1,171 @@
+{
+  "dataset_hash": "f3e0911688ef5c5b6bd75d300ab2acf21ab90bfe7f10d8d933a2e8100587bd44",
+  "protocol_hash": "e7655a6515aff4c45fa3de40bf5713635eba5f20bb5eb0d385bcf2965a59d487",
+  "review_kind": "evaluation_gold",
+  "reviews": [
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "54f778f2165988cdded28306951ccd55374c135ebb75f4344bf1ef951c8c501d",
+      "case_id": "PM-01",
+      "decision": null,
+      "goals_checked": [
+        "season-growth"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "8386f23cbb14cbdfd66a1794b7588f6de5a8a6b513ac54f754d5b57743c63ded",
+      "case_id": "PM-02",
+      "decision": null,
+      "goals_checked": [
+        "sale"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "58bdd7335e9b2730ad7a549182107eea4caeca2f94d671fc4639e79966f3158b",
+      "case_id": "PM-03",
+      "decision": null,
+      "goals_checked": [
+        "reserve",
+        "remaining-sale"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "ec63866f3e77a9114e3ebc89629fd42e015eadc512650d93c6c1e02fc189aee6",
+      "case_id": "PM-04",
+      "decision": null,
+      "goals_checked": [
+        "sale",
+        "explanation"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "5725e064d6ca7bdf563a1880498294d8faffb1fcf8aca038762c151d6a2ff9b5",
+      "case_id": "PM-05",
+      "decision": null,
+      "goals_checked": [
+        "sale-before",
+        "sale-after"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "d5ddb77aa156627ca13ccc987bcff8e205294a602d9cf0016091696f23bf462c",
+      "case_id": "PM-06",
+      "decision": null,
+      "goals_checked": [
+        "wine",
+        "jelly"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "8bc982d7f25d74d0f197c0392a87e573c3999abf18fd1283c1a63caf122069d6",
+      "case_id": "PM-07",
+      "decision": null,
+      "goals_checked": [
+        "clarify"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "13e0ecbac9c5db6af9ce793c4ffb45ea4fb206170fa41d097be5a3d0ff99e595",
+      "case_id": "PM-08",
+      "decision": null,
+      "goals_checked": [
+        "scope"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "a05e6cdce263058489cb55b217e4b88d428481eeba045563847435530bd039da",
+      "case_id": "PM-09",
+      "decision": null,
+      "goals_checked": [
+        "visual"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "d6af95b20eb6060eac13354e5097448845bd55dddcb88fe09413bffc4653fb6a",
+      "case_id": "PM-10",
+      "decision": null,
+      "goals_checked": [
+        "stage"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "7555981630089501b5804310ab2b315434628a445ca6da9543b9b3bc8b5f2f7e",
+      "case_id": "PM-11",
+      "decision": null,
+      "goals_checked": [
+        "sale",
+        "growth"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    },
+    {
+      "actor_id": null,
+      "actor_kind": null,
+      "case_hash": "99e6e0641aebadba2e13d1edd2ee9755310bca8de1a799ce8fd6406c4de580ee",
+      "case_id": "PM-12",
+      "decision": null,
+      "goals_checked": [
+        "clarify",
+        "resume"
+      ],
+      "reason": null,
+      "review_origin": null,
+      "reviewed_at": null
+    }
+  ],
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "source_hash": "2e1caf85d41f9aed6a5d734d448459286d3c143cce8b568a6846b81f7d8aceb1"
+}

@@ -1,0 +1,22 @@
+{
+  "attached_query_cases": {
+    "PM-09": "query:V01",
+    "PM-10": "query:V10"
+  },
+  "capture_manifest_sha256": "4ea9efaff3c118fee9b9d44f560257ba26b48dd9b48520841561b02f6c647f3c",
+  "crop_manifest_sha256": "e0f5c67eb5dbeb8e63122c7fe7672f525ae04cc22120a51eb5cc2868f885d8e9",
+  "expected_goals_changed": 0,
+  "human_approvals_created": 0,
+  "legacy60_missing_image_interactions_unchanged": 9,
+  "new_independent_captures": 0,
+  "parent_protocol_hashes": {
+    "cases": "c0a7970b7a9efb06a44a350174d2e6191160bdc4295368054615895b518bb594",
+    "protocol": "62447f9ac79c0b0879cbefff443cf829f6709c8b14274e4d7ad3908c4416123a",
+    "sources": "3cce68a7e1a0560f40c7d7f36e34fcfb75539ed9389acac5da7bce85f512fd3f"
+  },
+  "questions_changed": 0,
+  "snapshot_id": "c704b0819193e793a6f5088b3d2dac57363698cd687bb74e5eb6ae3e8cddf303",
+  "source_captures": 9,
+  "source_crop_rows": 35,
+  "status": "CANDIDATE_INPUTS_PREPARED_NOT_SCORED"
+}

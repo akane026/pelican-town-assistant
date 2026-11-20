@@ -1,0 +1,109 @@
+[
+  {
+    "capture_group": "autosaved_inventory",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V01",
+      "query:V02",
+      "query:V03",
+      "query:V04"
+    ],
+    "source_sha256": "04e4b9e5ca60a878def21ed963d2f49821ee7f0a47baa46fd8732d9cc4a16334",
+    "split": "development"
+  },
+  {
+    "capture_group": "arqade_melon",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V10",
+      "query:V11"
+    ],
+    "source_sha256": "cc6f86ca9c6691fe9b77b3e2d8f8f61511eff03cdbaefc47ffce314dbecee115",
+    "split": "development"
+  },
+  {
+    "capture_group": "tom_melon",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V32",
+      "query:V33",
+      "query:V34",
+      "query:V35"
+    ],
+    "source_sha256": "9414c6e927d2c17a06885115c0c711cbc5470463360629a213729950217fdb7b",
+    "split": "development"
+  },
+  {
+    "capture_group": "3dm_inventory",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V12",
+      "query:V13",
+      "query:V14",
+      "query:V15",
+      "query:V16",
+      "query:V17",
+      "query:V18",
+      "query:V19",
+      "query:V20",
+      "query:V21"
+    ],
+    "source_sha256": "03ca06c1869b489172b1935360e9f5a7ad4c1d00c06887ccdabf4d7ba1890a3f",
+    "split": "development"
+  },
+  {
+    "capture_group": "9game_inventory",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V22",
+      "query:V23",
+      "query:V24",
+      "query:V25",
+      "query:V26",
+      "query:V27"
+    ],
+    "source_sha256": "fdc6cb9f5fe0f52b922c58885ee30eb10d6cdf70594dca991cdfade1d6f9a28c",
+    "split": "development"
+  },
+  {
+    "capture_group": "forum_seed_shop",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V07",
+      "query:V08",
+      "query:V09"
+    ],
+    "source_sha256": "37607c2f7ed290c6817447b9692cfda6ef212cda481dd06bf3403d03be889979",
+    "split": "development"
+  },
+  {
+    "capture_group": "carls_beginning",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V05",
+      "query:V06"
+    ],
+    "source_sha256": "3fd956bbb88218d4a50f6db7c3ef5d72f7b38cb4fd3685c37bd268f9dda0993b",
+    "split": "development"
+  },
+  {
+    "capture_group": "steam_crafting",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V28",
+      "query:V29"
+    ],
+    "source_sha256": "862d6068389caf4d2f2e061f271e2627c83996948bafcfdd200607662a094ae6",
+    "split": "development"
+  },
+  {
+    "capture_group": "korean_inventory",
+    "claim_scope": "diagnostic_reused_capture",
+    "query_ids": [
+      "query:V30",
+      "query:V31"
+    ],
+    "source_sha256": "4d1c3228b835302ff766448456d1e7e93d8f2f3811616fa4ce76333c39526ade",
+    "split": "development"
+  }
+]

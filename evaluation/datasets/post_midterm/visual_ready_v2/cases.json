@@ -1,0 +1,549 @@
+[
+  {
+    "category": "knowledge",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "两个子目标均需回答并引用原文；春季，6个有效生长夜晚。",
+        "id": "season-growth",
+        "kind": "knowledge",
+        "reference_candidate": {
+          "growth_nights": 6,
+          "season": "Spring"
+        },
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-01",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "甘蓝适合什么季节种植，首次成熟需要几个有效生长夜晚？请说明依据。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "calculation",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "3×110=330g；品质和职业条件保持。",
+        "expected_outputs": {
+          "sales_g": 330
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "profession": "none",
+          "quality": "normal",
+          "quantity": 3
+        },
+        "id": "sale",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-02",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "3个普通品质甘蓝，无职业加成，直接卖多少钱？",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "composition",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "每种普通作物预留1个；原库存不改。",
+        "expected_outputs": {
+          "inventory_observed_unchanged": true,
+          "status": "FEASIBLE"
+        },
+        "expected_params": {
+          "entity_id": "entity:Spring_Crops_Bundle"
+        },
+        "id": "reserve",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "bundle_reserve",
+        "turn": 0
+      },
+      {
+        "description": "只卖预留后的5个；5×35=175g。",
+        "expected_outputs": {
+          "sales_g": 175
+        },
+        "expected_params": {
+          "entity_id": "entity:Parsnip",
+          "profession": "none",
+          "quality": "normal",
+          "quantity": 5
+        },
+        "id": "remaining-sale",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-03",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Bundles",
+      "source:Parsnip"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "春季作物收集包尚未交物品。我有普通防风草6个、青豆1个、花椰菜1个、土豆1个，无职业。先预留献祭，再计算剩余防风草直接出售价值，不修改原库存。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "mixed",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "金额330g。",
+        "expected_outputs": {
+          "sales_g": 330
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "profession": "none",
+          "quality": "normal",
+          "quantity": 3
+        },
+        "id": "sale",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 0
+      },
+      {
+        "description": "回答春季与6个有效生长夜晚，并给出依据；不能因计算完成而遗漏。",
+        "id": "explanation",
+        "kind": "knowledge",
+        "reference_candidate": {
+          "growth_nights": 6,
+          "season": "Spring"
+        },
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-04",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "3个普通品质甘蓝，无职业加成，直接卖多少钱？还请解释它的生长季节和首次成熟天数，并给出处。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "multiturn",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "首轮12×110=1320g。",
+        "expected_outputs": {
+          "sales_g": 1320
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "quantity": 12
+        },
+        "id": "sale-before",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 0
+      },
+      {
+        "description": "第二轮8×110=880g；旧结果不可当有效答案。",
+        "expected_outputs": {
+          "sales_g": 880
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "quantity": 8
+        },
+        "id": "sale-after",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 1
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-05",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "12个普通甘蓝，无职业，直接卖多少钱？",
+        "requires_image": false
+      },
+      {
+        "image_ids": [],
+        "message": "数量改成8个，其他条件不变。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "multiturn",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "2×(250×3)=1500g。",
+        "expected_outputs": {
+          "sales_g": 1500
+        },
+        "expected_params": {
+          "entity_id": "entity:Melon",
+          "product_id": "entity:Wine",
+          "quality": "normal",
+          "quantity": 2
+        },
+        "id": "wine",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "processing_value",
+        "turn": 0
+      },
+      {
+        "description": "2×(250×2+50)=1100g，不把两个计划同时消耗原料。",
+        "expected_outputs": {
+          "sales_g": 1100
+        },
+        "expected_params": {
+          "entity_id": "entity:Melon",
+          "product_id": "entity:Jelly",
+          "quality": "normal",
+          "quantity": 2
+        },
+        "id": "jelly",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "processing_value",
+        "turn": 1
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-06",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Melon",
+      "source:Wine",
+      "source:Jellies_and_Pickles"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "2个普通甜瓜，无职业，做果酒的最终销售额是多少？不考虑排产。",
+        "requires_image": false
+      },
+      {
+        "image_ids": [],
+        "message": "改成做果酱；还没实际加工，原库存不变。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "missing_input",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "allowed_statuses": [
+          "NEEDS_INPUT"
+        ],
+        "description": "数量、品质和职业条件缺失时先追问，不能默认数量1。",
+        "id": "clarify",
+        "kind": "status",
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-07",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "我想知道手里的甘蓝直接卖多少钱。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "unsupported",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "说明资料和能力未覆盖，不编造价格、公式或全局最优；允许澄清但不假装已计算。",
+        "id": "scope",
+        "kind": "knowledge",
+        "reference_candidate": "模组与截止排产不支持。",
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-08",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "我的模组新增了星晶果，请保证今晚收益最高的机器排产。",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "visual_unknown",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "真实图片到位后独立核对候选、错误接受和确认负担；目前输入缺失不能判通过。",
+        "id": "visual",
+        "kind": "knowledge",
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "hidden_identity_labels": [
+      "Parsnip",
+      "防风草"
+    ],
+    "id": "PM-09",
+    "identity_visibility": "hidden",
+    "independence": "post_implementation_development",
+    "input_preparation_note": "Existing query ROI reused; all questions and expected goals remain unchanged. Draft labels are offline only and require independent human review.",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Parsnip",
+      "query:V01"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [
+          "query:V01"
+        ],
+        "message": "请根据框选图片给出物品候选；我不知道名字。",
+        "requires_image": true,
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    ],
+    "visual_sample_scope": "diagnostic_reused_capture"
+  },
+  {
+    "category": "visual_stage",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "先判断作物/阶段歧义，未知阶段内时间只能返回有依据区间。",
+        "id": "stage",
+        "kind": "knowledge",
+        "requires_answer_review": true,
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "hidden_identity_labels": [
+      "Melon",
+      "甜瓜",
+      "Melon_Stage_3"
+    ],
+    "id": "PM-10",
+    "identity_visibility": "hidden",
+    "independence": "post_implementation_development",
+    "input_preparation_note": "Existing query ROI reused; all questions and expected goals remain unchanged. Draft labels are offline only and require independent human review.",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Melon",
+      "query:V10"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [
+          "query:V10"
+        ],
+        "message": "这张作物阶段图距离成熟还需多久？每天浇水，无加速，不知道该阶段已经过了几晚。",
+        "requires_image": true,
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    ],
+    "visual_sample_scope": "diagnostic_reused_capture"
+  },
+  {
+    "category": "composition",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "description": "5×110=550g。",
+        "expected_outputs": {
+          "sales_g": 550
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "quantity": 5
+        },
+        "id": "sale",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 0
+      },
+      {
+        "description": "27+6=33，超过28日；两个目标都应回答。",
+        "expected_outputs": {
+          "first_harvest_day": 33,
+          "within_season": false
+        },
+        "expected_params": {
+          "acceleration": "none",
+          "day": 27,
+          "entity_id": "entity:Kale",
+          "season": "Spring",
+          "watered": true
+        },
+        "id": "growth",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "growth_timing",
+        "turn": 0
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-11",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale",
+      "source:Crops"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "5个普通甘蓝，无职业，直接卖多少钱？另外春27日种甘蓝，每天浇水、无加速，本季还来得及首次收获吗？",
+        "requires_image": false
+      }
+    ]
+  },
+  {
+    "category": "multiturn",
+    "claim_scope": "exploratory_product_diagnostic",
+    "expected_goals": [
+      {
+        "allowed_statuses": [
+          "NEEDS_INPUT"
+        ],
+        "description": "缺少数量/品质/职业时追问。",
+        "id": "clarify",
+        "kind": "status",
+        "requires_answer_review": true,
+        "turn": 0
+      },
+      {
+        "description": "7×137=959g；补参后续答保留已有实体。",
+        "expected_outputs": {
+          "sales_g": 959
+        },
+        "expected_params": {
+          "entity_id": "entity:Kale",
+          "profession": "none",
+          "quality": "silver",
+          "quantity": 7
+        },
+        "id": "resume",
+        "kind": "calculation",
+        "requires_answer_review": true,
+        "rule_id": "sale_value",
+        "turn": 1
+      }
+    ],
+    "expected_origin": "assistant_authored_pending_review",
+    "id": "PM-12",
+    "independence": "post_implementation_development",
+    "review_status": "PENDING_HUMAN",
+    "source_refs": [
+      "source:Kale"
+    ],
+    "split": "development",
+    "turns": [
+      {
+        "image_ids": [],
+        "message": "我想知道甘蓝直接出售价值。",
+        "requires_image": false
+      },
+      {
+        "image_ids": [],
+        "message": "7个银星甘蓝，无职业加成。",
+        "requires_image": false
+      }
+    ]
+  }
+]

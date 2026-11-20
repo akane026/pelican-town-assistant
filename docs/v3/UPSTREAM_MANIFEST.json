@@ -1,0 +1,20 @@
+{
+  "commit": "e9cc3f5728bb8cf1d3904614532a7345db0f0f47",
+  "files": {
+    "LICENSE": "451f9e8014f1770afc3ee359773db7c47d686b42f44fa679b71dec00310677af",
+    "README.md": "b8555c7c30a2bea0fc3d558742ef4952014d81e8f85b1f136fe4c9973dc906ea",
+    "model/embed.py": "7d75a00cade757c99acb495a766abf5b0709ed244f7bec4d54c13ce08e3cccbc",
+    "model/retriever.py": "58b064e1782b6d9216dd8d4211a5f9c1ddb03a2f9ec8fa4c8fd4786c7d92d5e1",
+    "rag/mmkg.py": "bf6037fe851c27b0b1426b10ac77c1141183b227ee099369d6f5e13416782103",
+    "rag/multimodal/build.py": "ad92555ca5f593c8840846331c082d30bf0b959bfa10c5b12441a59eb0ad2901",
+    "rag/multimodal/mmrag.py": "438ae573cb17e5c04cf3934fb04348c2a6d0b5e19be2ff4c16ed61bf403e3b84",
+    "rag/multimodal/operate.py": "4b3ca1f40cf667bbe3f6e1859b5179270a40d89c6ce593167d7949a2a370f75e",
+    "rag/multimodal/query.py": "fef1c4462707350700e9b6aacc0c3da9ac7c2c60969d86f24776ba26236249e9",
+    "rag/multimodal/utils.py": "dcc0475a20f0c33a967d04691d9896558da68ade675dd0c8516177ac492fa172",
+    "rag/prompt.py": "16cc15143d5287c86b9a56502f4237fc44bb3e47994c85e4a80d1e3ca4a440cb",
+    "rag/utils.py": "690ea5a8df7137906612619dec34c6f461f384f50279eae3477aa2ca10bff036",
+    "requirements.txt": "939de4de9f70501be70ac408988f6ff9467bbe22bd99de039e5fc4978d244fc5"
+  },
+  "license": "Apache-2.0",
+  "repository": "https://github.com/xandery-geek/mKG-RAG"
+}

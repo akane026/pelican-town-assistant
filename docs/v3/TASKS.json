@@ -1,0 +1,1321 @@
+[
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103721.076924Z-01-record-baseline-commit",
+        "code_manifest": "artifacts/v3/execution/20261112T103721.076924Z-01-record-baseline-commit/code_manifest.json",
+        "code_manifest_sha256": "e26228296a61cc4878288a0823aedea408f6b2e78e922d2e42c9e249bd80b713",
+        "command": [
+          "git",
+          "commit",
+          "-m",
+          "chore: preserve original verification sources and dependency lock"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.021754707999207312,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103721.076924Z-01-record-baseline-commit/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103721.076924Z-01-record-baseline-commit/stdout.log",
+        "step": "01-record-baseline-commit"
+      }
+    ],
+    "limitations": [
+      "旧离线复跑为 PARTIAL / 2；原文件保留且哈希不变。"
+    ],
+    "status": "PASS",
+    "step": 1,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074703.185664Z-02-07-original-components",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.upstream import *; print(run_reference(read(DATA/'latest_build.json')['build_id'])['status'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.09924529199997778,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074703.185664Z-02-07-original-components/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074703.185664Z-02-07-original-components/stdout.log",
+        "step": "02-07-original-components"
+      }
+    ],
+    "limitations": [
+      "仅固定原函数组件执行；非原版 EGTR / QM 全流程。"
+    ],
+    "status": "PASS",
+    "step": 2,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074508.028595Z-03-04-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_construction.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.4963870420033345,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074508.028595Z-03-04-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074508.028595Z-03-04-tests/stdout.log",
+        "step": "03-04-tests"
+      }
+    ],
+    "limitations": [
+      "数据契约与协议已有；独立标注金标准未完成。"
+    ],
+    "status": "PARTIAL",
+    "step": 3,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074254.696074Z-04-05",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(mode='structural',online=False)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.6184890830008953,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074254.696074Z-04-05/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074254.696074Z-04-05/stdout.log",
+        "step": "04-05"
+      }
+    ],
+    "limitations": [
+      "24页分段与真实图像资源；准确性仍需人工核对。"
+    ],
+    "status": "PASS",
+    "step": 4,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074302.279244Z-05-07",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(mode='multimodal',online=True,visual_limit=5,text_limit=2,alignment_limit=2)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.7144052080002439,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074302.279244Z-05-07/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074302.279244Z-05-07/stdout.log",
+        "step": "05-07"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074317.292432Z-05-07-network",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(mode='multimodal',online=True,visual_limit=5,text_limit=2,alignment_limit=2,resume=False)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 98.06568683300065,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074317.292432Z-05-07-network/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074317.292432Z-05-07-network/stdout.log",
+        "step": "05-07-network"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T081811.308285Z-05-bundle-template",
+        "command": [
+          ".venv/bin/python",
+          "-"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 2.1057121670019114,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T081811.308285Z-05-bundle-template/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T081811.308285Z-05-bundle-template/stdout.log",
+        "step": "05-bundle-template"
+      }
+    ],
+    "limitations": [
+      "A/B 同模板新作物导入；没有逐作物业务分支。"
+    ],
+    "status": "PASS",
+    "step": 5,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074831.056390Z-06-07-stage-pixels",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(mode='multimodal',online=True,visual_limit=5,text_limit=2,alignment_limit=2,resume=False)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 58.388466541000525,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074831.056390Z-06-07-stage-pixels/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074831.056390Z-06-07-stage-pixels/stdout.log",
+        "step": "06-07-stage-pixels"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels",
+        "command": [
+          ".venv/bin/python",
+          "scripts/compound_build.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 94.81430058299884,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stdout.log",
+        "step": "06-08-compound-pixels"
+      }
+    ],
+    "limitations": [
+      "真实模型像素抽取含3个复合图对象；非全面视觉准确率。"
+    ],
+    "status": "PASS",
+    "step": 6,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels",
+        "command": [
+          ".venv/bin/python",
+          "scripts/compound_build.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 94.81430058299884,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stdout.log",
+        "step": "06-08-compound-pixels"
+      }
+    ],
+    "limitations": [
+      "实体、状态、关系说明候选已产生；实际错图/缺图/去上下文小样运行，独立人审不足。"
+    ],
+    "status": "PARTIAL",
+    "step": 7,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074522.122393Z-08-build",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.core import *; from stardew_agent.knowledge import build_snapshot; print(build_snapshot(read(DATA/'latest_build.json')['build_id'])['snapshot_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.7665559580018453,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074522.122393Z-08-build/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074522.122393Z-08-build/stdout.log",
+        "step": "08-build"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T074703.303584Z-08-roundtrip",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.knowledge import *; s=Snapshot(allow_candidate=True); print(s.roundtrip()); print(review_export(s.id)['count'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.20721829099784372,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T074703.303584Z-08-roundtrip/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T074703.303584Z-08-roundtrip/stdout.log",
+        "step": "08-roundtrip"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels",
+        "command": [
+          ".venv/bin/python",
+          "scripts/compound_build.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 94.81430058299884,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085051.468020Z-06-08-compound-pixels/stdout.log",
+        "step": "06-08-compound-pixels"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090239.889770Z-08-final-inspect",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "inspect"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.5590499999998428,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090239.889770Z-08-final-inspect/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090239.889770Z-08-final-inspect/stdout.log",
+        "step": "08-final-inspect"
+      }
+    ],
+    "limitations": [
+      "Semantica 构图、导出、来源存取和独立进程重载运行。"
+    ],
+    "status": "PASS",
+    "step": 8,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T075130.810032Z-09-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_construction.py",
+          "tests/test_knowledge.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.8664864999991551,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T075130.810032Z-09-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T075130.810032Z-09-tests/stdout.log",
+        "step": "09-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092549.436882Z-09-publication-integrity",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_publication.py",
+          "tests/test_knowledge.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 8.620579124999495,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092549.436882Z-09-publication-integrity/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092549.436882Z-09-publication-integrity/stdout.log",
+        "step": "09-publication-integrity"
+      }
+    ],
+    "limitations": [
+      "审核完整性、子集发布、失败回滚在临时副本测试通过；无人审签字，没有正式快照。"
+    ],
+    "status": "PARTIAL",
+    "step": 9,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T075013.061413Z-10-batch-a-parse",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(batch='batch_a',mode='multimodal',online=False,visual_limit=0,text_limit=0,alignment_limit=0)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.4008215840003686,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T075013.061413Z-10-batch-a-parse/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T075013.061413Z-10-batch-a-parse/stdout.log",
+        "step": "10-batch-a-parse"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T075136.109381Z-10-batch-a-visual",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(batch='batch_a',mode='multimodal',online=True,visual_limit=3,text_limit=1,alignment_limit=1)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 40.111549000001105,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T075136.109381Z-10-batch-a-visual/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T075136.109381Z-10-batch-a-visual/stdout.log",
+        "step": "10-batch-a-visual"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T080931.446193Z-10-batch-b-frozen",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import build_batch; print(build_batch(batch='batch_b',mode='multimodal',online=True,visual_limit=3,text_limit=1,alignment_limit=1)['build_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 53.515703249999206,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T080931.446193Z-10-batch-b-frozen/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T080931.446193Z-10-batch-b-frozen/stdout.log",
+        "step": "10-batch-b-frozen"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T081243.818451Z-10-merge-batches",
+        "command": [
+          ".venv/bin/python",
+          "-c",
+          "from stardew_agent.construction import assemble; from stardew_agent.knowledge import build_snapshot; b=assemble(['6f54ce74ede3f8efd62b','2690cb1f40265ba01efb','c58179dbb893a7d6ebb6']); print(b); print(build_snapshot(b)['snapshot_id'])"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.8455490410015045,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T081243.818451Z-10-merge-batches/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T081243.818451Z-10-merge-batches/stdout.log",
+        "step": "10-merge-batches"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090738.530844Z-10-incremental-matrix",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_incremental.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.0433712089979963,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090738.530844Z-10-incremental-matrix/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090738.530844Z-10-incremental-matrix/stdout.log",
+        "step": "10-incremental-matrix"
+      }
+    ],
+    "limitations": [
+      "A/B冻结导入；重复幂等、页修订、原文/像素变更、失败恢复和缓存复用测试通过。"
+    ],
+    "status": "PASS",
+    "step": 10,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085301.242661Z-11-construction-diagnostic",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "evaluate",
+          "--suite",
+          "construction"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.0582030000005034,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T085301.242661Z-11-construction-diagnostic/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085301.242661Z-11-construction-diagnostic/stdout.log",
+        "step": "11-construction-diagnostic"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092408.851906Z-11-semantic-pixel-controls",
+        "command": [
+          ".venv/bin/python",
+          "scripts/semantic_pixel_controls.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 23.783147082998767,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092408.851906Z-11-semantic-pixel-controls/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092408.851906Z-11-semantic-pixel-controls/stdout.log",
+        "step": "11-semantic-pixel-controls"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092637.759247Z-11-nonempty-context-controls",
+        "command": [
+          ".venv/bin/python",
+          "scripts/semantic_pixel_controls.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 13.627023249999183,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092637.759247Z-11-nonempty-context-controls/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092637.759247Z-11-nonempty-context-controls/stdout.log",
+        "step": "11-nonempty-context-controls"
+      }
+    ],
+    "limitations": [
+      "同文本消融、来源单位与语义干预小样已运行；人工评分未完成。"
+    ],
+    "status": "PARTIAL",
+    "step": 11,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.742800249998254,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stdout.log",
+        "step": "12-15-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092400.545353Z-12-pixel-rerank-contracts",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_reranking.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.30847041699962574,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092400.545353Z-12-pixel-rerank-contracts/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092400.545353Z-12-pixel-rerank-contracts/stdout.log",
+        "step": "12-pixel-rerank-contracts"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank",
+        "command": [
+          ".venv/bin/python",
+          "scripts/pixel_rerank_pilot.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 62.19607212499977,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank/stdout.log",
+        "step": "12-17-live-pixel-rerank"
+      }
+    ],
+    "limitations": [
+      "实体/关系/子图、签名包、补查与真实问题像素重排已运行；独立效果评测不足。"
+    ],
+    "status": "PARTIAL",
+    "step": 12,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.742800249998254,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stdout.log",
+        "step": "12-15-tests"
+      }
+    ],
+    "limitations": [
+      "六类纯计算与相关/无关事实、关键边、唯一/冗余来源干预测试通过；规则人审待补。"
+    ],
+    "status": "PARTIAL",
+    "step": 13,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.742800249998254,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stdout.log",
+        "step": "12-15-tests"
+      }
+    ],
+    "limitations": [
+      "局部候选与版本状态已实现；全交互和新截图效果未正式评测。"
+    ],
+    "status": "PARTIAL",
+    "step": 14,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.742800249998254,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082124.908727Z-12-15-tests/stdout.log",
+        "step": "12-15-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082323.055748Z-15-live-sale",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "sale"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 22.03282404100173,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T082323.055748Z-15-live-sale/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082323.055748Z-15-live-sale/stdout.log",
+        "step": "15-live-sale"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T082743.714982Z-15-live-sale-retry",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "sale"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 19.01999862500088,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T082743.714982Z-15-live-sale-retry/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T082743.714982Z-15-live-sale-retry/stdout.log",
+        "step": "15-live-sale-retry"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T083107.180536Z-15-live-compose",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "compose"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 30.52780937499847,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T083107.180536Z-15-live-compose/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T083107.180536Z-15-live-compose/stdout.log",
+        "step": "15-live-compose"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T084046.938622Z-15-live-compose-retry",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "compose"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 51.90118174999952,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T084046.938622Z-15-live-compose-retry/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T084046.938622Z-15-live-compose-retry/stdout.log",
+        "step": "15-live-compose-retry"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T084631.240312Z-15-live-compose-resume",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_continue.py",
+          "--task-id",
+          "4973bcc4-ee5a-434b-971f-296e0257883e",
+          "--message",
+          "继续刚才的目标，库存仍是10个普通防风草、1个普通青豆、1个普通花椰菜、1个普通土豆，没有已交付项目，也没有职业加成。请依据工具返回的预留结果计算，不自行猜剩余数量。"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 27.447702375000517,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T084631.240312Z-15-live-compose-resume/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T084631.240312Z-15-live-compose-resume/stdout.log",
+        "step": "15-live-compose-resume"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085336.203328Z-15-live-clarification",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "clarify"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 23.761493292000523,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085336.203328Z-15-live-clarification/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085336.203328Z-15-live-clarification/stdout.log",
+        "step": "15-live-clarification"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090239.890159Z-15-agent-summary",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "evaluate",
+          "--suite",
+          "agent"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.13165570799901616,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T090239.890159Z-15-agent-summary/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090239.890159Z-15-agent-summary/stdout.log",
+        "step": "15-agent-summary"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090626.523078Z-15-finalization-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_answer_validation.py",
+          "tests/test_runtime.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.5356894579999789,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090626.523078Z-15-finalization-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090626.523078Z-15-finalization-tests/stdout.log",
+        "step": "15-finalization-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090551.867268Z-15-live-compose-finalization",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "compose"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 54.41182491600193,
+        "exit_code": 1,
+        "stderr": "artifacts/v3/execution/20261112T090551.867268Z-15-live-compose-finalization/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090551.867268Z-15-live-compose-finalization/stdout.log",
+        "step": "15-live-compose-finalization"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090822.936978Z-15-live-compose-persistence-fix",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "compose"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 26.276726500000223,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090822.936978Z-15-live-compose-persistence-fix/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090822.936978Z-15-live-compose-persistence-fix/stdout.log",
+        "step": "15-live-compose-persistence-fix"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T091029.817221Z-15-live-clarification-resume",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_continue.py",
+          "--task-id",
+          "650cbcf4-b476-4ef3-86f7-4586d89ecf64",
+          "--message",
+          "我有7个银星甘蓝，没有职业加成。请继续计算直接出售的总价值。"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 31.278483750000305,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T091029.817221Z-15-live-clarification-resume/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T091029.817221Z-15-live-clarification-resume/stdout.log",
+        "step": "15-live-clarification-resume"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102402.955098Z-15-semantic-guard-contracts",
+        "code_manifest": "artifacts/v3/execution/20261112T102402.955098Z-15-semantic-guard-contracts/code_manifest.json",
+        "code_manifest_sha256": "59b3fb632ea760623ad80c53bbe4474705ebf25f2628eee8d487c8eac5cd2d1d",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_grounding.py",
+          "tests/test_answer_validation.py",
+          "tests/test_reranking.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.4250856250000652,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102402.955098Z-15-semantic-guard-contracts/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102402.955098Z-15-semantic-guard-contracts/stdout.log",
+        "step": "15-semantic-guard-contracts"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102510.643423Z-15-semantic-finalization-tests",
+        "code_manifest": "artifacts/v3/execution/20261112T102510.643423Z-15-semantic-finalization-tests/code_manifest.json",
+        "code_manifest_sha256": "f133d0f5900a78b92e0153cdfe7c8a39bb4b4b71ee9713bd5592bdddd21f2287",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_grounding.py",
+          "tests/test_answer_validation.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.1886004170009983,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102510.643423Z-15-semantic-finalization-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102510.643423Z-15-semantic-finalization-tests/stdout.log",
+        "step": "15-semantic-finalization-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102526.082946Z-15-live-semantic-check-repair",
+        "code_manifest": "artifacts/v3/execution/20261112T102526.082946Z-15-live-semantic-check-repair/code_manifest.json",
+        "code_manifest_sha256": "f133d0f5900a78b92e0153cdfe7c8a39bb4b4b71ee9713bd5592bdddd21f2287",
+        "command": [
+          ".venv/bin/python",
+          "scripts/answer_semantic_pilot.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.1654504159996577,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T102526.082946Z-15-live-semantic-check-repair/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102526.082946Z-15-live-semantic-check-repair/stdout.log",
+        "step": "15-live-semantic-check-repair"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102737.619222Z-15-live-goal-entity-variation",
+        "code_manifest": "artifacts/v3/execution/20261112T102737.619222Z-15-live-goal-entity-variation/code_manifest.json",
+        "code_manifest_sha256": "c6c70c0fe59a411f56acae70d4b527be4dd65a8c98acf628bce8d1a84cf98e9f",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_variations.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 79.18272504099878,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102737.619222Z-15-live-goal-entity-variation/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102737.619222Z-15-live-goal-entity-variation/stdout.log",
+        "step": "15-live-goal-entity-variation"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102910.599711Z-15-output-projection-tests",
+        "code_manifest": "artifacts/v3/execution/20261112T102910.599711Z-15-output-projection-tests/code_manifest.json",
+        "code_manifest_sha256": "c20ddd13bbb0c3e0382a20cef22d176c4144fcc9728d3e7db966bb4c66547c63",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_answer_rendering.py",
+          "tests/test_grounding.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.1814038750017062,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102910.599711Z-15-output-projection-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102910.599711Z-15-output-projection-tests/stdout.log",
+        "step": "15-output-projection-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103033.871669Z-15-live-structured-composition",
+        "code_manifest": "artifacts/v3/execution/20261112T103033.871669Z-15-live-structured-composition/code_manifest.json",
+        "code_manifest_sha256": "73f9f50bd88f777d808d82475810777b00e4eecea2bdbdba6eec711e8c390d14",
+        "command": [
+          ".venv/bin/python",
+          "scripts/agent_pilot.py",
+          "--case",
+          "compose"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 17.329331832999742,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103033.871669Z-15-live-structured-composition/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103033.871669Z-15-live-structured-composition/stdout.log",
+        "step": "15-live-structured-composition"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103308.316330Z-15-variation-arithmetic-audit",
+        "code_manifest": "artifacts/v3/execution/20261112T103308.316330Z-15-variation-arithmetic-audit/code_manifest.json",
+        "code_manifest_sha256": "0befb654d7a21f666ae040c12976549b608a8ae2826a5d678684cf0ef5555438",
+        "command": [
+          ".venv/bin/python",
+          "scripts/score_agent_variations.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.02115754199985531,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103308.316330Z-15-variation-arithmetic-audit/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103308.316330Z-15-variation-arithmetic-audit/stdout.log",
+        "step": "15-variation-arithmetic-audit"
+      }
+    ],
+    "limitations": [
+      "真实销售、组合与多轮改目标/实体运行；计算答案直接由工具输出生成，普通知识问答仍需独立语义评测。"
+    ],
+    "status": "PARTIAL",
+    "step": 15,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T083151.970343Z-16-runtime-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.686752042001899,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T083151.970343Z-16-runtime-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T083151.970343Z-16-runtime-tests/stdout.log",
+        "step": "16-runtime-tests"
+      }
+    ],
+    "limitations": [
+      "审阅/搜索/上传框选/补参历史经浏览器验证；全部交互覆盖未完成。"
+    ],
+    "status": "PARTIAL",
+    "step": 16,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085301.243553Z-17-retrieval-diagnostic",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "evaluate",
+          "--suite",
+          "retrieval"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.0555784170028346,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085301.243553Z-17-retrieval-diagnostic/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085301.243553Z-17-retrieval-diagnostic/stdout.log",
+        "step": "17-retrieval-diagnostic"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank",
+        "command": [
+          ".venv/bin/python",
+          "scripts/pixel_rerank_pilot.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 62.19607212499977,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092452.952132Z-12-17-live-pixel-rerank/stdout.log",
+        "step": "12-17-live-pixel-rerank"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102401.787504Z-17-isolated-image-control",
+        "code_manifest": "artifacts/v3/execution/20261112T102401.787504Z-17-isolated-image-control/code_manifest.json",
+        "code_manifest_sha256": "59b3fb632ea760623ad80c53bbe4474705ebf25f2628eee8d487c8eac5cd2d1d",
+        "command": [
+          ".venv/bin/python",
+          "scripts/isolated_image_retrieval.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 35.535957291998784,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102401.787504Z-17-isolated-image-control/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102401.787504Z-17-isolated-image-control/stdout.log",
+        "step": "17-isolated-image-control"
+      }
+    ],
+    "limitations": [
+      "72条词项诊断BQ/D持平；6次联合图像重排另列，未宣称独立盲测优势。"
+    ],
+    "status": "PARTIAL",
+    "step": 17,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T091301.567605Z-18-prepare-60-review",
+        "command": [
+          ".venv/bin/python",
+          "scripts/prepare_evaluation60.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.12801775000116322,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T091301.567605Z-18-prepare-60-review/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T091301.567605Z-18-prepare-60-review/stdout.log",
+        "step": "18-prepare-60-review"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T094529.869801Z-18-formal-status",
+        "code_manifest": "artifacts/v3/execution/20261112T094529.869801Z-18-formal-status/code_manifest.json",
+        "code_manifest_sha256": "2200d1da4617c4bc289771a79a702009e2d535fec5eba6d7ce69ef33145a7ac7",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "evaluate",
+          "--suite",
+          "formal"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.09525695800039102,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T094529.869801Z-18-formal-status/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T094529.869801Z-18-formal-status/stdout.log",
+        "step": "18-formal-status"
+      }
+    ],
+    "limitations": [
+      "60题候选参考答案与来源目录已保存；0题人审、8题缺独立图片，正式执行BLOCKED。"
+    ],
+    "status": "BLOCKED",
+    "step": 18,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T085138.389654Z-19-api-failure-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 3.107911332997901,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T085138.389654Z-19-api-failure-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T085138.389654Z-19-api-failure-tests/stdout.log",
+        "step": "19-api-failure-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090245.292869Z-19-final-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 3.071188957997947,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090245.292869Z-19-final-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090245.292869Z-19-final-tests/stdout.log",
+        "step": "19-final-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090553.038855Z-19-independent-venv-create",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "venv",
+          ".venv-repro"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.8693632499998785,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090553.038855Z-19-independent-venv-create/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090553.038855Z-19-independent-venv-create/stdout.log",
+        "step": "19-independent-venv-create"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090625.341538Z-19-independent-install",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pip",
+          "install",
+          "--require-hashes",
+          "-r",
+          "requirements/verification.lock.txt"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 84.13092020800104,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090625.341538Z-19-independent-install/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090625.341538Z-19-independent-install/stdout.log",
+        "step": "19-independent-install"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090931.394618Z-19-independent-reproduce",
+        "command": [
+          ".venv-repro/bin/python",
+          "scripts/independent_repro.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 1.3027427080014604,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090931.394618Z-19-independent-reproduce/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090931.394618Z-19-independent-reproduce/stdout.log",
+        "step": "19-independent-reproduce"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090932.528434Z-19-causal-evidence-tests",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_evidence_interventions.py",
+          "tests/test_answer_validation.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.682903583998268,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090932.528434Z-19-causal-evidence-tests/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090932.528434Z-19-causal-evidence-tests/stdout.log",
+        "step": "19-causal-evidence-tests"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092112.299262Z-19-independent-full-suite",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 5.8395695830004115,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092112.299262Z-19-independent-full-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092112.299262Z-19-independent-full-suite/stdout.log",
+        "step": "19-independent-full-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T092744.112212Z-19-final-independent-suite",
+        "code_manifest": "artifacts/v3/execution/20261112T092744.112212Z-19-final-independent-suite/code_manifest.json",
+        "code_manifest_sha256": "b18d038414f2ce7ecda55259e0fa552ec07b8886ad71cc1325ccc941554afc95",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 6.952151416997367,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T092744.112212Z-19-final-independent-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T092744.112212Z-19-final-independent-suite/stdout.log",
+        "step": "19-final-independent-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T094240.374515Z-19-reliability-report",
+        "code_manifest": "artifacts/v3/execution/20261112T094240.374515Z-19-reliability-report/code_manifest.json",
+        "code_manifest_sha256": "ffacbf40842083eb53aa2504623fc363e655ca21e5ff4c73949ae6b45dbd73b1",
+        "command": [
+          ".venv/bin/python",
+          "scripts/reliability_report.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.027393708001909545,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T094240.374515Z-19-reliability-report/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T094240.374515Z-19-reliability-report/stdout.log",
+        "step": "19-reliability-report"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T094529.871942Z-19-reliability-status",
+        "code_manifest": "artifacts/v3/execution/20261112T094529.871942Z-19-reliability-status/code_manifest.json",
+        "code_manifest_sha256": "2200d1da4617c4bc289771a79a702009e2d535fec5eba6d7ce69ef33145a7ac7",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "stardew_agent.cli",
+          "evaluate",
+          "--suite",
+          "reliability"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.0904157920012949,
+        "exit_code": 2,
+        "stderr": "artifacts/v3/execution/20261112T094529.871942Z-19-reliability-status/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T094529.871942Z-19-reliability-status/stdout.log",
+        "step": "19-reliability-status"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T102625.635424Z-19-final-independent-suite",
+        "code_manifest": "artifacts/v3/execution/20261112T102625.635424Z-19-final-independent-suite/code_manifest.json",
+        "code_manifest_sha256": "c6c70c0fe59a411f56acae70d4b527be4dd65a8c98acf628bce8d1a84cf98e9f",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 7.772084874999564,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T102625.635424Z-19-final-independent-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T102625.635424Z-19-final-independent-suite/stdout.log",
+        "step": "19-final-independent-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103032.353062Z-19-final-independent-suite",
+        "code_manifest": "artifacts/v3/execution/20261112T103032.353062Z-19-final-independent-suite/code_manifest.json",
+        "code_manifest_sha256": "73f9f50bd88f777d808d82475810777b00e4eecea2bdbdba6eec711e8c390d14",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 7.716069375001098,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103032.353062Z-19-final-independent-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103032.353062Z-19-final-independent-suite/stdout.log",
+        "step": "19-final-independent-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103207.438985Z-19-final-independent-suite",
+        "code_manifest": "artifacts/v3/execution/20261112T103207.438985Z-19-final-independent-suite/code_manifest.json",
+        "code_manifest_sha256": "abb10d28d3e4dcf751d8e73d8f9cef97a6f3af938b77aa81964519a3517754cc",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 7.6981877090001944,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103207.438985Z-19-final-independent-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103207.438985Z-19-final-independent-suite/stdout.log",
+        "step": "19-final-independent-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103314.487417Z-19-final-independent-suite",
+        "code_manifest": "artifacts/v3/execution/20261112T103314.487417Z-19-final-independent-suite/code_manifest.json",
+        "code_manifest_sha256": "0befb654d7a21f666ae040c12976549b608a8ae2826a5d678684cf0ef5555438",
+        "command": [
+          ".venv-repro/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 7.849967291997018,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103314.487417Z-19-final-independent-suite/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103314.487417Z-19-final-independent-suite/stdout.log",
+        "step": "19-final-independent-suite"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103636.414229Z-19-reliability-report",
+        "code_manifest": "artifacts/v3/execution/20261112T103636.414229Z-19-reliability-report/code_manifest.json",
+        "code_manifest_sha256": "e26228296a61cc4878288a0823aedea408f6b2e78e922d2e42c9e249bd80b713",
+        "command": [
+          ".venv/bin/python",
+          "scripts/reliability_report.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.020365334003145108,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103636.414229Z-19-reliability-report/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103636.414229Z-19-reliability-report/stdout.log",
+        "step": "19-reliability-report"
+      }
+    ],
+    "limitations": [
+      "70项工程测试在独立安装环境通过，1150来源与代表计算复现；全面效果/安全保证不成立。"
+    ],
+    "status": "PARTIAL",
+    "step": 19,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  },
+  {
+    "command_records": [
+      {
+        "artifacts": "artifacts/v3/execution/20261112T090205.667456Z-20-midterm-checkpoint",
+        "command": [
+          ".venv/bin/python",
+          "scripts/midterm_checkpoint.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.6897825829983049,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T090205.667456Z-20-midterm-checkpoint/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T090205.667456Z-20-midterm-checkpoint/stdout.log",
+        "step": "20-midterm-checkpoint"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T094512.653226Z-20-evidence-checkpoint",
+        "code_manifest": "artifacts/v3/execution/20261112T094512.653226Z-20-evidence-checkpoint/code_manifest.json",
+        "code_manifest_sha256": "2200d1da4617c4bc289771a79a702009e2d535fec5eba6d7ce69ef33145a7ac7",
+        "command": [
+          ".venv/bin/python",
+          "scripts/midterm_checkpoint.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.6943811669989373,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T094512.653226Z-20-evidence-checkpoint/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T094512.653226Z-20-evidence-checkpoint/stdout.log",
+        "step": "20-evidence-checkpoint"
+      },
+      {
+        "artifacts": "artifacts/v3/execution/20261112T103636.518212Z-20-evidence-checkpoint",
+        "code_manifest": "artifacts/v3/execution/20261112T103636.518212Z-20-evidence-checkpoint/code_manifest.json",
+        "code_manifest_sha256": "e26228296a61cc4878288a0823aedea408f6b2e78e922d2e42c9e249bd80b713",
+        "command": [
+          ".venv/bin/python",
+          "scripts/midterm_checkpoint.py"
+        ],
+        "cwd": ".",
+        "elapsed_seconds": 0.6446590419982385,
+        "exit_code": 0,
+        "stderr": "artifacts/v3/execution/20261112T103636.518212Z-20-evidence-checkpoint/stderr.log",
+        "stdout": "artifacts/v3/execution/20261112T103636.518212Z-20-evidence-checkpoint/stdout.log",
+        "step": "20-evidence-checkpoint"
+      }
+    ],
+    "limitations": [
+      "中期验收状态与证据已归档；整体 V3 最终验收未完成。"
+    ],
+    "status": "PARTIAL",
+    "step": 20,
+    "test_result": "See linked actual stdout; absent command mapping is not counted as an independent step run."
+  }
+]

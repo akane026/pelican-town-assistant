@@ -1,0 +1,99 @@
+{
+  "budgets": {
+    "candidate_entities": 30,
+    "edge_reads": 120,
+    "final_records": 12,
+    "hops": 3,
+    "images": 4,
+    "pages": 5,
+    "unicode_chars": 6000
+  },
+  "cases_path": "evaluation/datasets/post_midterm/legacy60/cases.json",
+  "comparison_families": {
+    "product_workflow": {
+      "adapter": "stardew_agent.product_baseline:make_live_product",
+      "baseline": "A separately implemented user-facing text/multimodal retrieval workflow, not B renamed.",
+      "capability_differences": [
+        "Baseline retrieves original frozen text/table chunks, has no graph traversal and no deterministic calculator.",
+        "Both use the same text model; baseline uses a separate vision observation when reference/query images are present.",
+        "Numeric and semantic baseline answers require independent review, not tool receipt scoring."
+      ],
+      "measure": [
+        "task_success",
+        "name_input_burden",
+        "confirmations",
+        "latency",
+        "evidence_support"
+      ],
+      "methods": [
+        "product",
+        "D"
+      ],
+      "status": "EXPLORATORY_ADAPTER_IMPLEMENTED"
+    },
+    "structure_ablation": {
+      "B": "Flat multimodal records",
+      "BQ": "B plus shared question/pixel reranker",
+      "C": "Graph expansion without shared reranker",
+      "D": "C plus shared question/pixel reranker",
+      "measure": [
+        "initial_retrieval",
+        "supplementation",
+        "final_all_goals",
+        "cost"
+      ],
+      "methods": [
+        "B",
+        "BQ",
+        "C",
+        "D"
+      ],
+      "shared": [
+        "snapshot",
+        "public_inputs",
+        "visual_entry",
+        "model",
+        "output_budget",
+        "supplement_permissions"
+      ]
+    }
+  },
+  "dataset_id": "legacy60-complete-turn-review-v1",
+  "expected_policy": "Explicit source values/arithmetic authored independently of calculator execution; human source review required. Runtime TaskSpec and model self-judgments are never gold.",
+  "gold_review": {
+    "actor_kind": "human",
+    "candidate_not_formal": true,
+    "knowledge_review_separate": true,
+    "review_origin": "explicit_human_review"
+  },
+  "knowledge_snapshot_id": "0f47248587aed45b1fc0887be608e3bd8ad429f79e363e841c4b828dcd7b2ac0",
+  "legacy_original_hash": "f313fc369efd0d9fd9dfb2e4fc38708e4c68538d593302d855b803965711d40f",
+  "limits": [
+    "12 post-implementation exploratory cases, not blind samples.",
+    "Two visual inputs pending; missing inputs must remain blocked.",
+    "Gold semantic judgments require independent human review.",
+    "Product baseline is exploratory; formal protocol approval pending."
+  ],
+  "model_policy": {
+    "provider": "ChatECNU",
+    "same_model_for_paired_runs": true,
+    "temperature": 0,
+    "text_model_role": "configured_text_model",
+    "vision_model_role": "configured_vision_model"
+  },
+  "schema": "stardew/post-midterm-evaluation/v1",
+  "sources_path": "evaluation/datasets/post_midterm/legacy60/sources.json",
+  "status": "CANDIDATE_PROTOCOL_HUMAN_REVIEW_PENDING",
+  "version": 1,
+  "visual_policy": {
+    "capture_family_same_split": true,
+    "known_entity_template_allowed": true,
+    "thresholds": "Calibrate on development only, freeze before held-out scoring.",
+    "tracks": [
+      "known_entity_new_capture",
+      "new_entity_after_gallery_extension",
+      "open_set_rejection"
+    ],
+    "wiki_or_synthetic_is_not_real_screenshot": true
+  }
+}

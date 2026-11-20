@@ -1,0 +1,9 @@
+{
+  "schema_version": "stardew/v3.1",
+  "development": ["Parsnip", "Parsnip_Seeds", "Melon", "Melon_Seeds", "Blueberry", "Blueberry_Seeds", "Crops", "Keg", "Preserves_Jar", "Bundles", "Wine", "Jellies_and_Pickles"],
+  "batch_a": ["Potato", "Potato_Seeds", "Cauliflower", "Cauliflower_Seeds", "Green_Bean", "Bean_Starter"],
+  "batch_b": ["Kale", "Kale_Seeds", "Garlic", "Garlic_Seeds", "Tomato", "Tomato_Seeds"],
+  "remaining": [],
+  "batch_b_policy": "Freeze code hashes and annotation protocol before import; preserve all failures; changes after B invalidate held-out status.",
+  "game_version": "unverified_frozen_wiki_only"
+}

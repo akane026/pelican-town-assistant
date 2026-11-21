@@ -7,3 +7,6 @@ httpx
 Pillow
 PyYAML
 pytest
+filelock==3.16.1
+python-dotenv
+numpy

@@ -37,7 +37,7 @@ def local_path(value, root=ROOT):
 
 def read_rows(path):
     p = Path(path)
-    return [json.loads(line) for line in p.read_text().splitlines() if line.strip()] if p.suffix == '.jsonl' else read(p)
+    return [json.loads(line) for line in p.read_text(encoding='utf-8').splitlines() if line.strip()] if p.suffix == '.jsonl' else read(p)
 
 
 def exclusive_write(path, data):
@@ -46,10 +46,10 @@ def exclusive_write(path, data):
     p.parent.mkdir(parents=True, exist_ok=True)
     encoded = json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + '\n'
     try:
-        with p.open('x') as stream:
+        with p.open('x',encoding='utf-8',newline='\n') as stream:
             stream.write(encoded)
     except FileExistsError:
-        if p.read_text() != encoded:
+        if p.read_text(encoding='utf-8') != encoded:
             raise ValidationError('EVALUATION_OUTPUT_ALREADY_EXISTS')
     return str(p)
 
@@ -197,9 +197,9 @@ def export_review(bundle, output):
         lines += ['来源：' + ', '.join(c.get('source_refs', [])), '', '人工决定／理由：待填写', '']
     target = out / '完整逐轮待审目录.md'
     content = '\n'.join(lines) + '\n'
-    if target.exists() and target.read_text() != content:
+    if target.exists() and target.read_text(encoding='utf-8') != content:
         raise ValidationError('EVALUATION_OUTPUT_ALREADY_EXISTS')
-    target.write_text(content)
+    target.write_text(content,encoding='utf-8',newline='\n')
     return {'status': 'PENDING_HUMAN', 'directory': str(out), 'case_count': len(bundle['cases']),
             'validation': validation, 'gold_reviewed': 0}
 

@@ -20,7 +20,7 @@ def components():
       'rag/multimodal/build.py':['_handle_single_entity_extraction','_handle_single_relationship_extraction','_handle_single_mapping_extraction','_handle_images_attribute']}
     hashes={}
     for path,names in requested.items():
-        text=(BASE/path).read_text();tree=ast.parse(text)
+        text=(BASE/path).read_text(encoding='utf-8');tree=ast.parse(text)
         definitions=[n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name in names]
         if {n.name for n in definitions}!=set(names):raise ValidationError('UPSTREAM_COMPONENT_MISSING')
         module=ast.Module(body=[ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)]+definitions,type_ignores=[])

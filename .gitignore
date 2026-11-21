@@ -26,6 +26,8 @@ evaluation/gold/
 .venv-repro/
 资料/
 web/node_modules/
+web/dist/
+web/*.tsbuildinfo
 *.sqlite*
 *.tar.gz
 !data/manifests/

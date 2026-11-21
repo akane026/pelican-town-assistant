@@ -12,19 +12,19 @@ def canonical(value):return json.dumps(value,ensure_ascii=False,sort_keys=True,s
 def digest(value):return hashlib.sha256(value if isinstance(value,bytes) else canonical(value).encode()).hexdigest()
 def file_hash(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def ident(kind,*parts):return kind+':'+digest(parts)[:28]
-def read(path):return json.loads(Path(path).read_text())
+def read(path):return json.loads(Path(path).read_text(encoding='utf-8'))
 def write(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     fd,name=tempfile.mkstemp(dir=path.parent,prefix=path.name+'.',suffix='.tmp')
     try:
-        with os.fdopen(fd,'w') as f:f.write(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n')
+        with os.fdopen(fd,'w',encoding='utf-8',newline='\n') as f:f.write(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n')
         os.replace(name,path)
     finally:
         if os.path.exists(name):os.unlink(name)
-def rows(path):return [json.loads(s) for s in Path(path).read_text().splitlines() if s.strip()]
+def rows(path):return [json.loads(s) for s in Path(path).read_text(encoding='utf-8').splitlines() if s.strip()]
 def append(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    with path.open('a') as f:f.write(canonical(value)+'\n')
+    with path.open('a',encoding='utf-8',newline='\n') as f:f.write(canonical(value)+'\n')
 def contained(path,root=ROOT):
     p=Path(path).resolve();base=Path(root).resolve()
     if not p.is_relative_to(base):raise ValidationError('PATH_NOT_ALLOWED')

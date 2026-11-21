@@ -33,7 +33,7 @@ def import_legacy_manifest():
 def parse_page(source,assets):
     path=ROOT/source['raw_path']
     if file_hash(path)!=source['sha256']:raise ValidationError('SOURCE_CHANGED:'+source['page_id'])
-    soup=BeautifulSoup(path.read_text(),'lxml')
+    soup=BeautifulSoup(path.read_text(encoding='utf-8'),'lxml')
     for n in soup.select('script,style,nav,.navbox,.mw-editsection,.toc,.printfooter'):n.decompose()
     tables=soup.find_all('table');table_ids={id(t):i for i,t in enumerate(tables)}
     lookup={norm_url(url):a for a in assets for url in [a['url']]+a.get('url_aliases',[])}

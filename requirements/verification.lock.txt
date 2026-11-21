@@ -1,6 +1,8 @@
 # Resolved from requirements/verification.in on 2026-11-12.
 # Target: CPython 3.12, macOS arm64. Wheel hashes are platform specific.
 # Install with: python -m pip install --require-hashes -r requirements/verification.lock.txt
+# Cross-platform file locking added for Windows support (universal wheel).
+filelock==3.16.1 --hash=sha256:2082e5703d51fbf98ea75855d9d5527e33d8ff23099bec374a134febee6946b0
 
 annotated-types==0.8.0 --hash=sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0
 anyio==4.16.0 --hash=sha256:c66ae634e0b8228396b801741beb3294326d4b6102f7bba4041c0dfb58c29026

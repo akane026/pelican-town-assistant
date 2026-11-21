@@ -87,13 +87,17 @@ def test_workbench_serves_frontend_without_snapshot(tmp_path, monkeypatch):
 
     monkeypatch.setattr(knowledge, 'DATA', tmp_path)
     monkeypatch.setattr(server, 'TaskStore', lambda: TaskStore(tmp_path / 'tasks.sqlite3'))
+    frontend = tmp_path / 'frontend'
+    frontend.mkdir()
+    (frontend / 'index.html').write_text('<div id="root">鹈鹕镇助手</div>', encoding='utf-8')
+    monkeypatch.setattr(server, 'FRONTEND_DIST', frontend)
     app = server.make_server(port=0)
     worker = threading.Thread(target=app.serve_forever, daemon=True)
     worker.start()
     try:
         with httpx.Client(base_url=f'http://127.0.0.1:{app.server_port}', trust_env=False) as client:
             page = client.get('/')
-            assert page.status_code == 200 and '助手对话' in page.text
+            assert page.status_code == 200 and 'id="root"' in page.text
             result = client.get('/api/bootstrap')
             assert result.status_code == 200
             boot = result.json()

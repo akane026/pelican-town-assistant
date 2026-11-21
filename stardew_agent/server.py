@@ -1,15 +1,50 @@
 """Loopback-only workbench. Browser writes require same-origin and a session token."""
 from __future__ import annotations
 import base64,json,mimetypes,secrets,threading,traceback
+from dotenv import dotenv_values
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
-from urllib.parse import urlparse,parse_qs
+from urllib.parse import urlparse,parse_qs,unquote
 from .core import *
 from .knowledge import Snapshot,review_export,publish
 from .state import TaskStore
 from .agent import Agent
+from .model import ModelClient
+from .providers import ChatECNU
 from .online_vision import ImageStore,VisualMatcher
 from .retrieval import Retriever
 from .rules import RULES,rule_audit,record_rule_review,rule_fingerprint,dependencies
+
+FRONTEND_DIST = ROOT / 'web' / 'dist'
+
+
+def browser_model_client(api_key):
+    """Isolate each turn's browser credential; never fall back to the disk key."""
+    if not api_key:
+        raise ValidationError('API_KEY_REQUIRED')
+    if not isinstance(api_key, str) or len(api_key) > 512 or any(not 33 <= ord(c) <= 126 for c in api_key):
+        raise ValidationError('INVALID_API_KEY')
+    config = {**dotenv_values(ROOT / '.env.example'), **dotenv_values(ROOT / '.env')}
+    config['CHATECNU_API_KEY'] = api_key
+    legacy_ledger = ROOT / 'verification/logs/api_budget.json'
+    initial = read(legacy_ledger).get('calls', 0) if legacy_ledger.exists() else 0
+    return ModelClient(provider=ChatECNU(config=config, initial_calls=initial))
+
+
+def frontend_file(request_path):
+    """Serve the React build without exposing source, secrets or parent paths."""
+    relative = unquote(request_path).lstrip('/')
+    root = FRONTEND_DIST.resolve()
+    candidate = (root / relative).resolve()
+    if not candidate.is_relative_to(root):
+        return None
+    if candidate.is_file():
+        return candidate
+    # Only application routes receive the SPA shell; missing assets stay 404.
+    route = relative.split('/')[0]
+    if not relative or route in {'chat', 'graph', 'plans', 'knowledge'}:
+        if '.' not in relative and (root / 'index.html').is_file():
+            return root / 'index.html'
+    return None
 
 class Workbench:
     def __init__(self):
@@ -19,17 +54,21 @@ class Workbench:
         p=DATA/'reviews'/(s.id+'.json')
         return read(p) if p.exists() else {'snapshot_id':s.id,'decisions':[]}
     def task_snapshot(self,t):return Snapshot(t['snapshot_id'],allow_candidate=t['execution_mode']!='released')
-    def chat(self,task_id,message):
+    def chat(self,task_id,message,*,api_key=None):
         if not isinstance(message,str) or not message.strip() or len(message)>12000:raise ValidationError('MESSAGE_LIMIT')
+        client = browser_model_client(api_key)
         self.tasks.get(task_id)
         with self.lock:
             if task_id in self.jobs and self.jobs[task_id].is_alive():raise ValidationError('TASK_BUSY')
             def run():
-                try:Agent(self.tasks).run(task_id,message)
+                try:Agent(self.tasks, client=client).run(task_id,message)
                 except Exception as exc:
                     t=self.tasks.get(task_id)
                     if t['status']!='CANCELLED':self.tasks.save_runtime(task_id,t['revision'],status='ERROR',answer={'status':'ERROR','answer_text':'请求中断，已保存此前工具结果。','error_code':type(exc).__name__})
-                    write(ARTIFACTS/'server_errors'/(task_id+'.json'),{'type':type(exc).__name__,'traceback':traceback.format_exc()})
+                    write(ARTIFACTS/'server_errors'/(task_id+'.json'),{'type':type(exc).__name__,'traceback':traceback.format_exc().replace(api_key, '[REDACTED]')})
+                finally:
+                    client.client.key = ''
+                    client.client.config.pop('CHATECNU_API_KEY', None)
             job=threading.Thread(target=run,daemon=True);self.jobs[task_id]=job;job.start()
         return {'status':'ACCEPTED','task_id':task_id}
     def get(self,path,q):
@@ -90,12 +129,12 @@ class Workbench:
                 return '\n'.join(lines)
             return content
         raise ValidationError('ROUTE_NOT_FOUND')
-    def post(self,path,d):
+    def post(self,path,d,*,api_key=None):
         if path=='/api/task':
             mode=d.get('mode','candidate_diagnostic')
             if mode not in ('candidate_diagnostic','released'):raise ValidationError('INVALID_MODE')
             s=Snapshot(allow_candidate=mode!='released');return self.tasks.create(s.id,mode)
-        if path=='/api/chat':return self.chat(d['task_id'],d['message'])
+        if path=='/api/chat':return self.chat(d['task_id'],d['message'],api_key=api_key)
         if path=='/api/cancel':
             t=self.tasks.get(d['task_id']);return self.tasks.cancel(t['task_id'],d.get('revision',t['revision']))
         if path=='/api/state':return self.tasks.update(d['task_id'],d['revision'],d['fields'],source='user_ui',quote=d.get('quote','explicit workbench input'))
@@ -145,7 +184,9 @@ def make_server(host='127.0.0.1',port=8765):
             data=body if isinstance(body,bytes) else (body if isinstance(body,str) else canonical(body)).encode()
             self.send_response(status);self.send_header('Content-Type',ctype);self.send_header('Content-Length',str(len(data)))
             self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff')
-            self.send_header('Content-Security-Policy',"default-src 'self'; img-src 'self' blob: data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'")
+            # React Flow and Radix position elements with inline styles. Scripts
+            # remain same-origin only; no inline JavaScript is allowed.
+            self.send_header('Content-Security-Policy',"default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'")
             self.end_headers();self.wfile.write(data)
         def safe_host(self):
             return self.headers.get('Host','') in (f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}')
@@ -157,8 +198,13 @@ def make_server(host='127.0.0.1',port=8765):
                     f=app.image(q);return self.reply(200,f.read_bytes(),mimetypes.guess_type(f.name)[0] or 'image/png')
                 if p.path.startswith('/api/'):
                     r=app.get(p.path,q);return self.reply(200,r,'text/markdown; charset=utf-8' if isinstance(r,str) else 'application/json; charset=utf-8')
-                if p.path not in ('/','/app.js','/styles.css'):return self.reply(404,{'error':'NOT_FOUND'})
-                f=ROOT/'web'/('index.html' if p.path=='/' else p.path[1:]);self.reply(200,f.read_bytes(),mimetypes.guess_type(f.name)[0]+'; charset=utf-8')
+                if not (FRONTEND_DIST / 'index.html').is_file():
+                    return self.reply(503, '前端尚未构建。请在 web 目录运行 npm ci 和 npm run build，然后刷新。', 'text/plain; charset=utf-8')
+                f = frontend_file(p.path)
+                if f is None:
+                    return self.reply(404, {'error': 'NOT_FOUND'})
+                ctype = {'.js': 'text/javascript', '.css': 'text/css', '.html': 'text/html'}.get(f.suffix)
+                self.reply(200, f.read_bytes(), (ctype or mimetypes.guess_type(f.name)[0] or 'application/octet-stream'))
             except (ValueError,KeyError,OSError) as exc:self.reply(400,{'error':str(exc)[:250],'type':type(exc).__name__})
         def do_POST(self):
             origin=self.headers.get('Origin');allowed={f'http://127.0.0.1:{self.server.server_port}',f'http://localhost:{self.server.server_port}'}
@@ -168,7 +214,9 @@ def make_server(host='127.0.0.1',port=8765):
                 if not 0<size<=14_000_000:raise ValidationError('REQUEST_LIMIT')
                 d=json.loads(self.rfile.read(size))
                 if not isinstance(d,dict):raise ValidationError('JSON_OBJECT_REQUIRED')
-                self.reply(200,app.post(urlparse(self.path).path,d))
+                authorization = self.headers.get('Authorization', '')
+                api_key = authorization[7:] if authorization.startswith('Bearer ') else None
+                self.reply(200,app.post(urlparse(self.path).path,d,api_key=api_key))
             except (ValueError,KeyError,TypeError,OSError) as exc:self.reply(400,{'error':str(exc)[:250],'type':type(exc).__name__})
     server=ThreadingHTTPServer((host,port),Handler);server.app=app;return server
 

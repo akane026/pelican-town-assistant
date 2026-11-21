@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>骑自行车的鹈鹕</title>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#fff5df"/>
+  <!-- Strong silhouettes keep the bird and bicycle legible in a small tab. -->
+  <g stroke="#493323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="15" cy="48" r="10" fill="#e7edc7"/>
+    <circle cx="49" cy="48" r="10" fill="#e7edc7"/>
+    <path d="M15 48 24 33 33 48H15L40 35 49 48M33 48 24 33M40 35 38 29H44" fill="none" stroke="#638536"/>
+    <path d="M20 32H29" fill="none"/>
+    <path d="M29 35 34 39 31 45H37" fill="none" stroke="#b8772b"/>
+    <!-- Curved neck, broad bill and folded wing distinguish a pelican. -->
+    <path d="M12 24 18 25Q23 25 25 20L28 9Q29 5 35 5Q42 5 42 12L38 16 35 25Q34 34 25 34H19Q13 32 12 24Z" fill="#fffdf2"/>
+    <path d="M38 12 56 17Q52 25 39 20L35 16Z" fill="#e7a13b"/>
+    <path d="M39 16 54 17" fill="none" stroke="#bf7728" stroke-width="2"/>
+    <path d="M19 25Q22 31 30 27" fill="#e8d7b0" stroke="#ac936c" stroke-width="2"/>
+    <path d="M33 26 40 29" fill="none"/>
+  </g>
+  <circle cx="35" cy="11" r="2" fill="#30251c"/>
+  <circle cx="34.5" cy="10.5" r=".6" fill="#fff"/>
+</svg>

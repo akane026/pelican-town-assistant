@@ -33,11 +33,19 @@ class Workbench:
             job=threading.Thread(target=run,daemon=True);self.jobs[task_id]=job;job.start()
         return {'status':'ACCEPTED','task_id':task_id}
     def get(self,path,q):
-        s=self.task_snapshot(self.tasks.get(q['task_id'])) if q.get('task_id') else self.snapshot()
         if path=='/api/bootstrap':
-            return {'csrf':self.token,'snapshot':s.manifest,'released':read(DATA/'current.json') if (DATA/'current.json').exists() else None,
+            try:
+                manifest=self.snapshot().manifest
+            except ValidationError as exc:
+                if str(exc)!='NO_RELEASED_SNAPSHOT':raise
+                manifest=None
+            return {'csrf':self.token,'snapshot':manifest,'released':read(DATA/'current.json') if (DATA/'current.json').exists() else None,
+                    'knowledge_status':'AVAILABLE' if manifest else 'MISSING',
                     'tasks':self.tasks.list(),'rules':[{**r,'audit':rule_audit(k)} for k,r in RULES.items()],
                     'execution_modes':['candidate_diagnostic','released'],'server':'loopback-only'}
+        if path=='/api/evaluations':
+            return {p.stem:read(p) for p in (ARTIFACTS/'evaluation').glob('*summary.json')}
+        s=self.task_snapshot(self.tasks.get(q['task_id'])) if q.get('task_id') else self.snapshot()
         if path=='/api/task':
             t=self.tasks.get(q['id']);return {'task':t,'messages':self.tasks.messages(q['id']),'events':self.tasks.events(q['id']),
                     'running':q['id'] in self.jobs and self.jobs[q['id']].is_alive()}
@@ -81,8 +89,6 @@ class Workbench:
                 lines+=['## 工具与证据记录','','```json',json.dumps(content['events'],ensure_ascii=False,indent=2),'```']
                 return '\n'.join(lines)
             return content
-        if path=='/api/evaluations':
-            return {p.stem:read(p) for p in (ARTIFACTS/'evaluation').glob('*summary.json')}
         raise ValidationError('ROUTE_NOT_FOUND')
     def post(self,path,d):
         if path=='/api/task':

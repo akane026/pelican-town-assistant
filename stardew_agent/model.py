@@ -1,41 +1,36 @@
-"""Thin adapter over the verified provider client; new logs never touch the baseline."""
-import json,threading,fcntl
-from .core import ARTIFACTS, DATA, digest, read, write, ValidationError
+"""Model selection and structured caching over an injectable runtime provider."""
+import json
 
-_CALL_LOCK=threading.RLock()
+from .core import ARTIFACTS, DATA, ROOT, digest, read, write
+from .providers import ChatECNU, ModelProvider
+
+
 class ModelClient:
-    def __init__(self,offline=False):
-        self.offline=offline
-        import verification.chatecnu as legacy
-        self.old_base=legacy.BASE
-        self.legacy=legacy
-        self.client=legacy.ChatECNU()
-        self.logbase=ARTIFACTS/'model'
-        # The existing configured call budget includes all earlier verification requests.
-        initial=read(self.old_base/'logs/api_budget.json').get('calls',0) if (self.old_base/'logs/api_budget.json').exists() else 0
-        if not (self.logbase/'logs/api_budget.json').exists():write(self.logbase/'logs/api_budget.json',{'calls':initial,'initial_legacy_calls':initial})
-    def call(self,messages,label='v3',vision=False,**options):
-        if self.offline:return {'status':'BLOCKED','reason':'OFFLINE','execution_mode':'offline'}
-        lock_path=self.logbase/'logs/provider.lock';lock_path.parent.mkdir(parents=True,exist_ok=True)
-        with _CALL_LOCK,lock_path.open('a') as process_lock:
-            # The provider adapter uses a read/modify/write ledger. Separate
-            # build/evaluation processes must not lose increments or call IDs.
-            fcntl.flock(process_lock.fileno(),fcntl.LOCK_EX)
-            old=self.legacy.BASE
-            try:
-                self.legacy.BASE=self.logbase
-                r=self.client.call(self.client.config['CHATECNU_VISION_MODEL' if vision else 'CHATECNU_MODEL'],messages,label=label,**options)
-                r['execution_mode']='online'
-                return r
-            finally:
-                self.legacy.BASE=old
-                fcntl.flock(process_lock.fileno(),fcntl.LOCK_UN)
+    def __init__(self, offline=False, *, provider: ModelProvider | None = None):
+        self.offline = offline
+        self.logbase = ARTIFACTS / 'model'
+        # Preserve earlier probe usage without importing experimental code or
+        # changing its log directory. The first reservation seeds the new ledger.
+        if provider is not None:
+            self.client = provider
+        else:
+            legacy_ledger = ROOT / 'verification/logs/api_budget.json'
+            initial = read(legacy_ledger).get('calls', 0) if legacy_ledger.exists() else 0
+            self.client = ChatECNU(logbase=self.logbase, initial_calls=initial)
+
+    def call(self, messages, label='v3', vision=False, **options):
+        if self.offline:
+            return {'status': 'BLOCKED', 'reason': 'OFFLINE', 'execution_mode': 'offline'}
+        model = self.client.config['CHATECNU_VISION_MODEL' if vision else 'CHATECNU_MODEL']
+        result = self.client.call(model, messages, label=label, **options)
+        return {**result, 'execution_mode': 'online'}
+
     def image(self,path):return self.client.image_content(path)
     def structured(self,prompt,*,images=(),context=None,label='structured',offline=False):
         model=self.client.config['CHATECNU_VISION_MODEL' if images else 'CHATECNU_MODEL']
         from .core import file_hash
-        key=digest({'schema':'structured/v3.1','prompt':prompt,'context':context,'images':[file_hash(p) for p in images],
-                    'model':model,'temperature':0,'max_tokens':2048})
+        key=digest({'schema':'structured/v3.2','prompt':prompt,'context':context,'images':[file_hash(p) for p in images],
+                    'model':model,'endpoint':self.client.config.get('CHATECNU_BASE_URL'),'temperature':0,'max_tokens':2048})
         cache=DATA/'cache/models'/(key+'.json')
         if cache.exists():return {**read(cache),'execution_mode':'cache','cache_key':key}
         if self.offline or offline:return {'status':'BLOCKED','reason':'OFFLINE_CACHE_MISS','cache_key':key,'execution_mode':'offline'}
@@ -52,5 +47,5 @@ class ModelClient:
             except ValueError:r.update(status='INVALID_JSON')
         r['cache_key']=key
         write(ARTIFACTS/'model/requests'/(key+'.json'),{'prompt':prompt,'context':context,'image_hashes':[file_hash(p) for p in images],
-              'model':model,'response':r,'schema_version':'structured/v3.1'})
+              'model':model,'response':r,'schema_version':'structured/v3.2'})
         return r

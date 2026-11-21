@@ -21,7 +21,7 @@ def preserve(payload):
     if page not in PAGES:raise ValueError('Page outside bounded manifest')
     if urlparse(payload['url']).hostname!='stardewvalleywiki.com':raise ValueError('Unexpected source')
     html=payload['html'];digest=sha(html.encode());rev=re.search(r'oldid=(\d+)',payload.get('permanent_url',''))
-    raw=DATA/'raw'/f'{page}-dom-{digest[:12]}.html';raw.parent.mkdir(parents=True,exist_ok=True);raw.write_text(html)
+    raw=DATA/'raw'/f'{page}-dom-{digest[:12]}.html';raw.parent.mkdir(parents=True,exist_ok=True);raw.write_text(html,encoding='utf-8',newline='\n')
     _,text,tables,occ=parse_page(html,page)
     norm=DATA/'parsed'/f'{page}.json';dump(norm,{'page_id':page,'revision_id':rev.group(1) if rev else None,'text':text,'tables':tables})
     sources={r['page_id']:r for r in read_jsonl(DATA/'source_manifest.jsonl')}

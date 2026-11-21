@@ -31,7 +31,7 @@ def extract():
     for page,s in sources.items():
         if file_sha(BASE/s['raw_path'])!=s['sha256']:raise ValueError('Source hash mismatch: '+page)
         pages[page]=load(BASE/s['parsed_path'])
-        soups[page]=BeautifulSoup((BASE/s['raw_path']).read_text(),'lxml')
+        soups[page]=BeautifulSoup((BASE/s['raw_path']).read_text(encoding='utf-8'),'lxml')
         node('source:'+page,'Source',**s)
     def evidence(page, quote, location):
         if not quote.strip():raise ValueError('Empty evidence')

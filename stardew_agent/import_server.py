@@ -12,7 +12,7 @@ def preserve(payload):
     if page not in allowed or urlparse(payload['url']).hostname!='stardewvalleywiki.com':raise ValidationError('SOURCE_NOT_ALLOWED')
     html=payload['html'];h=digest(html.encode());rev=re.search(r'oldid=(\d+)',payload.get('permanent_url',''))
     if not rev:raise ValidationError('MISSING_REVISION')
-    p=DATA/'raw'/f'{page}-{h[:12]}.html';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(html)
+    p=DATA/'raw'/f'{page}-{h[:12]}.html';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(html,encoding='utf-8',newline='\n')
     sources={s['page_id']:s for s in read(DATA/'manifests/sources.json')}
     batch=next(k for k in ('batch_a','batch_b','remaining','development') if page in config[k])
     sources[page]={'page_id':page,'revision_id':rev.group(1),'url':payload['url'],'permanent_url':payload['permanent_url'],

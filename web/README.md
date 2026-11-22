@@ -28,11 +28,13 @@ src/
     graph-page.tsx            React Flow 画布、搜索、关系筛选、列表
     plans-page.tsx            方案副本、本地持久化、并排对照
     knowledge-page.tsx        来源、审核、发布与评测
+    library-page.tsx          知识资料列表、搜索、预览、编辑和删除
   components/
     ui/                      shadcn/ui 生成的 Button / Dialog / Tabs
     feedback.tsx             加载、错误、空状态与操作反馈
     settings.tsx             任务模式与游戏条件
     image-inspector.tsx      上传图片的区域选择、候选确认
+    library-import.tsx        文件与公开网页导入弹窗
     record-detail.tsx        原文、图片与来源详情
     pixel-art.tsx            项目原创 SVG 小图标
   hooks/use-workbench.ts      bootstrap、任务请求与轮询失效

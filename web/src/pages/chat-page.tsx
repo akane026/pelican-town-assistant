@@ -69,7 +69,7 @@ function Conversation({ taskId, mode }: { taskId?: string; mode: ExecutionMode }
 
   async function ensureTask(): Promise<Task> {
     if (task) return task;
-    if (!boot?.snapshot) throw new Error('还没有导入知识库，请先到「知识管理」查看准备步骤。');
+    if (!boot?.snapshot) throw new Error('还没有导入知识库，请先到「审核与发布」查看准备步骤。');
     return api<Task>('/task', { mode });
   }
 

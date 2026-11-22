@@ -14,7 +14,7 @@ def frontend(tmp_path, monkeypatch):
     return root
 
 
-@pytest.mark.parametrize('path', ['/', '/chat', '/chat/a-task', '/graph', '/plans', '/knowledge'])
+@pytest.mark.parametrize('path', ['/', '/chat', '/chat/a-task', '/graph', '/plans', '/knowledge', '/library', '/library/a-source'])
 def test_spa_deep_links(frontend, path):
     assert server.frontend_file(path) == frontend / 'index.html'
 

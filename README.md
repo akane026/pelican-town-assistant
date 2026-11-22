@@ -69,6 +69,16 @@ python3.12 -m venv .venv
 
 ## 完整工作台（Windows / macOS）
 
+### 知识库浏览
+
+左侧「知识库浏览」打开 `/library`，支持文件上传、网页导入、按名称或正文搜索、类型筛选、分页、正文/原始内容预览、修改和删除。当前一份文件或网页是一条独立资料；文件支持 UTF-8 编码的 TXT、Markdown、HTML、JSON、CSV，单份最多 2 MB。网页导入支持公开 HTTPS HTML/文本页面，保存当时的副本；不执行脚本、不登录网站、不访问内网，访问受限时可以上传已保存的 HTML。PDF、Word 尚无解析器。
+
+资料及其正文保存在后端 `data/library/library.sqlite3`，与浏览器无关。数据库在启动时自动创建。编辑采用版本号检查，防止多个页面互相覆盖；删除只移除资料库中的副本，不会破坏既有 `data/snapshots/`、证据链或历史对话。
+
+**上传与构图是两步。** 本页是原文管理入口，上传状态为「待构图」，尚未自动接入问答；现有 Wiki 构建流程仍需准备 `data/manifests/` 对应的来源与资源后执行 ingest / build / snapshot。普通文本不是已验证的图谱事实。页面不提供启用/停用开关：当前图谱包含跨来源合并和派生关系，改变来源集合需要重新生成快照。Agent 每轮读取对话绑定的快照，按任务调用检索工具，可能多次检索；不会每问一次重新构图，旧对话也不会自动切换到新快照。
+
+接口：`GET /api/library?q=&kind=&offset=`、`GET /api/library/source?id=`，以及 `POST /api/library/create`、`/api/library/update`、`/api/library/delete`。写请求使用现有同源与 CSRF 校验，不需要模型密钥；更改和删除携带 `id`、`revision`。上传文件以 `kind=file`、`filename`、base64 `data` 提交；网页以 `kind=web`、`url` 提交，均可选填 `title`。
+
 完整图谱、历史对话、游戏截图、原始 Wiki 文件及模型响应保存在开发机。复现完整流程需要根据 `data/manifests/` 自行取得对应版本的网页与资源，运行建图后才能查询候选图谱。历史日志和完整样例回放依赖当时的冻结资料。仓库中的开发报告保留了相应本地产物的路径与统计。
 
 `verification.acquire` 可以抓取一小批公开 Wiki 页面。`configs/corpus.json` 和 `stardew_agent.cli` 定义了建库批次与代理入口。获取来源和快照后，如需在线模型，在本地从 `.env.example` 创建 `.env`，设置可用模型与调用上限，随后运行工作台。网页使用的密钥由用户在浏览器内填写。

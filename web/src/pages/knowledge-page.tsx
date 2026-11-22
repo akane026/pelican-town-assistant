@@ -1,17 +1,8 @@
+import { PixelBook, PixelScroll, PixelCalendar } from '@/components/pixel-icons';
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  BookOpen,
-  Check,
-  ClipboardCheck,
-  FileText,
-  History,
-  RefreshCw,
-  Search,
-  Tag,
-  X,
-} from 'lucide-react';
+import { Check, History, RefreshCw, Search, X } from 'lucide-react';
 import { api, queryString } from '@/lib/api';
 import type { RecordDetail, ReviewData, Rule } from '@/lib/types';
 import { readable, recordTitle, statusLabels } from '@/lib/format';
@@ -29,40 +20,47 @@ import {
 } from '@/components/ui/dialog';
 
 const tabs = [
-  { value: 'sources', label: '资料来源', icon: FileText },
-  { value: 'review', label: '知识审核', icon: ClipboardCheck },
-  { value: 'versions', label: '版本发布', icon: Tag },
-  { value: 'evaluation', label: '评测记录', icon: History },
+  { value: 'sources', label: '资料来源', icon: PixelBook },
+  { value: 'review', label: '知识审核', icon: PixelScroll },
+  { value: 'versions', label: '版本发布', icon: PixelScroll },
+  { value: 'evaluation', label: '评测记录', icon: PixelCalendar },
 ];
 
 function Preparation() {
   return (
     <div className="preparation paper-panel">
       <div className="preparation-title">
-        <BookOpen size={35} />
+        <PixelBook size={48} />
         <div>
-          <h2>先为助手准备一本农场百科</h2>
-          <p>当前没有可用的知识快照。页面和交互已经就绪，问答需要真实资料支持。</p>
+          <h2>准备可用于问答的知识</h2>
+          <p>当前尚无知识快照。上传原文后，还需构图、审核与发布。</p>
         </div>
       </div>
       <ol className="preparation-steps">
         <li>
           <strong>准备 Wiki 原文与图片</strong>
-          <p>按照项目 data/manifests 中的清单恢复对应资料，保留原始路径和哈希。</p>
+          <p>在「知识资料」上传文件或导入网页，保留原文供核对。</p>
         </li>
         <li>
           <strong>校验资料并构建知识库</strong>
-          <p>
-            在项目终端使用 ingest、build 和 snapshot 命令。完整步骤见根目录
-            README；网页暂不提供资料导入接口。
-          </p>
+          <p>由项目维护者将资料纳入建库清单，在终端构建知识快照。</p>
         </li>
         <li>
           <strong>刷新并核对知识</strong>
           <p>候选快照就绪后，可在「知识审核」查看证据，批准可靠记录，再发布知识子集。</p>
         </li>
       </ol>
-      <p className="muted">在线问答还需要后端 .env 中有效的模型配置，以及大于 0 的调用上限。</p>
+      <details className="help-details">
+        <summary>维护者建库说明</summary>
+        <p className="muted">
+          按照项目 data/manifests 清单恢复资料，保留原始路径和哈希；新上传的资料需先转换到建库清单。
+          在终端执行 ingest、build 和 snapshot，完整步骤见项目根目录 README。
+          在线问答还需在农场设置中填写个人 API 密钥，并由后端配置模型地址和大于 0 的调用上限。
+        </p>
+      </details>
+      <Link className="text-link" to="/library">
+        上传或查看知识资料 →
+      </Link>
       <Link className="text-link" to="/graph?example=1">
         先体验物品图谱的交互示例
       </Link>
@@ -231,7 +229,7 @@ function ReviewPanel() {
             </aside>
             <section className="review-detail paper-panel">
               {!selected ? (
-                <EmptyState icon={<BookOpen size={36} />} title="让每条知识都有据可查">
+                <EmptyState icon={<PixelBook size={64} />} title="让每条知识都有据可查">
                   从左侧选择记录，对照原文和图片，再填写审核意见。
                 </EmptyState>
               ) : record.isLoading ? (
@@ -316,7 +314,7 @@ function Evaluations() {
       ))}
     </div>
   ) : (
-    <EmptyState icon={<ClipboardCheck size={45} />} title="还没有评测报告">
+    <EmptyState icon={<PixelCalendar size={64} />} title="还没有评测报告">
       后端生成评测结果后，会在这里展示。单次对话的工具记录可在回答下展开查看。
     </EmptyState>
   );
@@ -337,10 +335,10 @@ export default function KnowledgePage() {
       <div className="page-heading">
         <div>
           <h1>
-            <BookOpen />
-            核对知识，让回答有据可查
+            <PixelScroll />
+            审核与发布
           </h1>
-          <p>维护者工作区 · 让每一条原文、图片和关系都能追溯。</p>
+          <p>核对原文与关系，发布可用于问答的知识</p>
         </div>
         <Button
           className="town-button secondary"
@@ -355,7 +353,7 @@ export default function KnowledgePage() {
         <TabsList className="knowledge-tabs">
           {tabs.map(({ value, label, icon: Icon }) => (
             <TabsTrigger className="knowledge-tab" key={value} value={value}>
-              <Icon size={18} />
+              <Icon size={24} />
               {label}
             </TabsTrigger>
           ))}
@@ -394,7 +392,7 @@ export default function KnowledgePage() {
         <TabsContent value="review">{snapshot ? <ReviewPanel /> : <Preparation />}</TabsContent>
         <TabsContent value="versions">
           <section className="paper-panel release-panel">
-            <Tag size={35} />
+            <PixelScroll size={48} />
             <h2>让可靠的知识进入正式回答</h2>
             <p>只发布人工批准且满足依赖要求的知识子集。候选记录与旧快照会保留。</p>
             <div className="release-status">

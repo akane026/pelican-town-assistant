@@ -1,13 +1,10 @@
 import { lazy, Suspense, useState } from 'react';
 import { NavLink, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import {
-  BookOpen,
-  CalendarDays,
   ChevronRight,
   Home,
   Menu,
   MessageCircle,
-  Network,
   Plus,
   Settings as SettingsIcon,
   Sprout as SproutIcon,
@@ -15,6 +12,7 @@ import {
 import { useBootstrap } from './hooks/use-workbench';
 import { Loading, ErrorState } from './components/feedback';
 import { Pelican } from './components/pixel-art';
+import { PixelBook, PixelMap, PixelCalendar, PixelScroll } from './components/pixel-icons';
 import { Settings } from './components/settings';
 import {
   Dialog,
@@ -31,10 +29,12 @@ const ChatPage = lazy(() => import('./pages/chat-page'));
 const GraphPage = lazy(() => import('./pages/graph-page'));
 const PlansPage = lazy(() => import('./pages/plans-page'));
 const KnowledgePage = lazy(() => import('./pages/knowledge-page'));
+const LibraryPage = lazy(() => import('./pages/library-page'));
 const links = [
   { to: '/chat', label: '农场助手', icon: MessageCircle },
-  { to: '/graph', label: '物品图谱', icon: Network },
-  { to: '/plans', label: '我的计划', icon: CalendarDays },
+  { to: '/graph', label: '物品图谱', icon: PixelMap },
+  { to: '/library', label: '知识资料', icon: PixelBook },
+  { to: '/plans', label: '我的计划', icon: PixelCalendar },
 ];
 
 function Navigation({ close, settings }: { close: () => void; settings: () => void }) {
@@ -58,7 +58,7 @@ function Navigation({ close, settings }: { close: () => void; settings: () => vo
             onClick={close}
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
           >
-            <Icon size={21} />
+            <Icon size={24} />
             {label}
           </NavLink>
         ))}
@@ -92,8 +92,8 @@ function Navigation({ close, settings }: { close: () => void; settings: () => vo
           to="/knowledge"
           onClick={close}
         >
-          <BookOpen size={20} />
-          知识管理
+          <PixelScroll size={24} />
+          审核与发布
         </NavLink>
         <button
           className="nav-item"
@@ -120,7 +120,7 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(() => !hasApiKey());
   const [mode, setMode] = useState<ExecutionMode>('candidate_diagnostic');
   const title =
-    [...links, { to: '/knowledge', label: '知识管理' }].find((link) =>
+    [...links, { to: '/knowledge', label: '审核与发布' }].find((link) =>
       location.pathname.startsWith(link.to),
     )?.label || '农场助手';
   return (
@@ -172,6 +172,8 @@ export default function App() {
                 <Route path="/graph" element={<GraphPage />} />
                 <Route path="/plans" element={<PlansPage />} />
                 <Route path="/knowledge" element={<KnowledgePage />} />
+                <Route path="/library" element={<LibraryPage />} />
+                <Route path="/library/:sourceId" element={<LibraryPage />} />
                 <Route path="*" element={<Navigate to="/chat" replace />} />
               </Routes>
             </Suspense>
@@ -182,7 +184,7 @@ export default function App() {
         <DialogContent className="town-dialog mobile-nav">
           <DialogHeader className="sr-only">
             <DialogTitle>农场导航</DialogTitle>
-            <DialogDescription>前往助手、图谱、计划和知识管理。</DialogDescription>
+            <DialogDescription>前往助手、图谱、知识资料、计划和审核与发布。</DialogDescription>
           </DialogHeader>
           <Navigation close={() => setMobileOpen(false)} settings={() => setSettingsOpen(true)} />
         </DialogContent>

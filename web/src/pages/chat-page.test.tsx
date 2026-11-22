@@ -75,7 +75,7 @@ describe('chat without a knowledge snapshot', () => {
     fireEvent.keyDown(input, { key: 'Enter', isComposing: true });
     await waitFor(() => expect(fetch).toHaveBeenCalled());
     expect(
-      screen.queryByText('还没有导入知识库，请先到「知识管理」查看准备步骤。'),
+      screen.queryByText('还没有导入知识库，请先到「审核与发布」查看准备步骤。'),
     ).not.toBeInTheDocument();
     expect(input).toHaveValue('土豆');
   });

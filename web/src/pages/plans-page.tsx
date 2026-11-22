@@ -1,7 +1,8 @@
+import { PixelCalendar } from '@/components/pixel-icons';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
-import { CalendarDays, Check, ClipboardList, Plus, Trash2 } from 'lucide-react';
+import { Check, ClipboardList, Plus, Trash2 } from 'lucide-react';
 import { readPlans, writePlans } from '@/lib/plans';
 import { displayDate } from '@/lib/format';
 import { EmptyState, useAction } from '@/components/feedback';
@@ -28,8 +29,8 @@ export default function PlansPage() {
       <div className="page-heading">
         <div>
           <h1>
-            <CalendarDays />
-            把好主意，留在农场手账里
+            <PixelCalendar />
+            我的农场计划
           </h1>
           <p>保存当时的条件和回答，放在一起比较，再决定怎么做。</p>
         </div>
@@ -44,8 +45,8 @@ export default function PlansPage() {
       </div>
       {plans.length === 0 ? (
         <EmptyState
-          icon={<CalendarDays size={46} />}
-          title="手账的第一页，留给你的下一个计划"
+          icon={<PixelCalendar size={64} />}
+          title="记录你的第一个计划"
           action={
             <Link
               className="town-button"

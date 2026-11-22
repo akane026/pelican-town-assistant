@@ -33,8 +33,8 @@ export function hasApiKey() {
   return Boolean(readApiKey());
 }
 
-export function useHasApiKey() {
-  return useSyncExternalStore(subscribe, hasApiKey);
+export function useApiKey() {
+  return useSyncExternalStore(subscribe, readApiKey);
 }
 
 export function setApiKey(value: string) {

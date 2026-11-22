@@ -10,6 +10,7 @@ from .state import TaskStore
 from .agent import Agent
 from .model import ModelClient
 from .providers import ChatECNU
+from .library import LibraryStore
 from .online_vision import ImageStore,VisualMatcher
 from .retrieval import Retriever
 from .rules import RULES,rule_audit,record_rule_review,rule_fingerprint,dependencies
@@ -41,7 +42,7 @@ def frontend_file(request_path):
         return candidate
     # Only application routes receive the SPA shell; missing assets stay 404.
     route = relative.split('/')[0]
-    if not relative or route in {'chat', 'graph', 'plans', 'knowledge'}:
+    if not relative or route in {'chat', 'graph', 'plans', 'knowledge', 'library'}:
         if '.' not in relative and (root / 'index.html').is_file():
             return root / 'index.html'
     return None
@@ -49,6 +50,7 @@ def frontend_file(request_path):
 class Workbench:
     def __init__(self):
         self.token=secrets.token_urlsafe(32);self.tasks=TaskStore();self.images=ImageStore();self.jobs={};self.lock=threading.Lock()
+        self.library = LibraryStore()
     def snapshot(self):return Snapshot(allow_candidate=True)
     def reviews(self,s):
         p=DATA/'reviews'/(s.id+'.json')
@@ -72,6 +74,10 @@ class Workbench:
             job=threading.Thread(target=run,daemon=True);self.jobs[task_id]=job;job.start()
         return {'status':'ACCEPTED','task_id':task_id}
     def get(self,path,q):
+        if path == '/api/library':
+            return self.library.list(q.get('q', ''), q.get('kind', ''), q.get('offset', 0))
+        if path == '/api/library/source':
+            return self.library.get(q['id'])
         if path=='/api/bootstrap':
             try:
                 manifest=self.snapshot().manifest
@@ -130,6 +136,12 @@ class Workbench:
             return content
         raise ValidationError('ROUTE_NOT_FOUND')
     def post(self,path,d,*,api_key=None):
+        if path == '/api/library/create':
+            return self.library.create(d)
+        if path == '/api/library/update':
+            return self.library.update(d['id'], d['revision'], d['title'], d['content'])
+        if path == '/api/library/delete':
+            return self.library.delete(d['id'], d['revision'])
         if path=='/api/task':
             mode=d.get('mode','candidate_diagnostic')
             if mode not in ('candidate_diagnostic','released'):raise ValidationError('INVALID_MODE')

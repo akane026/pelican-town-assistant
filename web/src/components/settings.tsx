@@ -148,29 +148,32 @@ export function Settings({
       <DialogContent className="town-dialog settings-dialog">
         <DialogHeader>
           <DialogTitle>农场设置</DialogTitle>
-          <DialogDescription>设置任务模式，补充当前对话的游戏条件。</DialogDescription>
+          <DialogDescription>管理连接、知识版本和游戏条件</DialogDescription>
         </DialogHeader>
         <ConnectionSettings onSaved={onClose} />
         <hr />
-        <label>
-          新对话使用的知识
-          <select value={mode} onChange={(event) => setMode(event.target.value as ExecutionMode)}>
-            <option value="candidate_diagnostic">候选知识 · 诊断体验</option>
-            <option value="released" disabled={!boot.data?.released}>
-              已审核知识
-            </option>
-          </select>
-        </label>
-        <p className="muted">
-          候选知识尚未完成人工审核；正式计算使用已审核知识与规则。已有对话保留原来的版本。
-        </p>
+        <section className="settings-section" aria-labelledby="knowledge-mode-heading">
+          <h3 id="knowledge-mode-heading">知识版本</h3>
+          <label>
+            新对话使用的知识
+            <select value={mode} onChange={(event) => setMode(event.target.value as ExecutionMode)}>
+              <option value="candidate_diagnostic">候选知识 · 诊断体验</option>
+              <option value="released" disabled={!boot.data?.released}>
+                已审核知识
+              </option>
+            </select>
+          </label>
+          <p className="muted">候选知识尚未审核，正式计算请选择已审核知识。此设置只影响新对话。</p>
+        </section>
         <hr />
-        <h3>当前游戏条件</h3>
-        {data ? (
-          <TaskConditions task={data.task} />
-        ) : (
-          <p className="muted">开始对话后，可以在这里设置日期、品质和职业。也可以直接告诉助手。</p>
-        )}
+        <section className="settings-section" aria-labelledby="game-conditions-heading">
+          <h3 id="game-conditions-heading">当前游戏条件</h3>
+          {data ? (
+            <TaskConditions task={data.task} />
+          ) : (
+            <p className="muted">开始对话后可设置日期、品质和职业，也可以直接告诉助手。</p>
+          )}
+        </section>
         <hr />
         <p className="muted">本工具不会读取或修改你的游戏存档。计划仅保存在当前浏览器。</p>
         {data && (

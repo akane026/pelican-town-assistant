@@ -1,3 +1,14 @@
+import {
+  PixelMap,
+  PixelCrop,
+  PixelSeeds,
+  PixelFlower,
+  PixelJar,
+  PixelBundle,
+  PixelBarrel,
+  PixelBook,
+} from '@/components/pixel-icons';
+import { Sprout as PixelSprout } from '@/components/pixel-art';
 import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -9,6 +20,7 @@ import {
   ReactFlow,
   useNodesState,
   useReactFlow,
+  type FitViewOptions,
   type NodeProps,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -22,21 +34,25 @@ import { EmptyState, ErrorState, Loading } from '@/components/feedback';
 import { RecordDrawer } from '@/components/record-detail';
 import { Button } from '@/components/ui/button';
 
-const entityIcons: Record<string, string> = {
-  Crop: '🥔',
-  Seed: '🌰',
-  Season: '🌸',
-  Product: '🍯',
-  Bundle: '🎒',
-  Equipment: '🪣',
-  CropStage: '🌱',
+const entityIcons = {
+  Crop: PixelCrop,
+  Seed: PixelSeeds,
+  Season: PixelFlower,
+  Product: PixelJar,
+  Bundle: PixelBundle,
+  Equipment: PixelBarrel,
+  CropStage: PixelSprout,
 };
+function EntityIcon({ type }: { type: string }) {
+  const Icon = entityIcons[type as keyof typeof entityIcons] || PixelBook;
+  return <Icon />;
+}
 function ItemNode({ data }: NodeProps<EntityNode>) {
   return (
     <div className={`item-node ${data.selected ? 'selected' : ''}`}>
       <Handle type="target" position={Position.Left} />
       <span className="entity-icon" aria-hidden="true">
-        {entityIcons[data.entity.type] || '📗'}
+        <EntityIcon type={data.entity.type} />
       </span>
       <div>
         <strong>{data.entity.name}</strong>
@@ -48,6 +64,8 @@ function ItemNode({ data }: NodeProps<EntityNode>) {
 }
 const nodeTypes = { entity: ItemNode };
 const emptyGraph: GraphData = { nodes: [], edges: [], snapshot_id: '', truncated: false };
+// Keep labels readable on small canvases; users can pan or choose “适应画布”.
+const initialFitOptions: FitViewOptions = { padding: '6%', minZoom: 0.75, maxZoom: 1 };
 
 function FitOnResize({ container }: { container: RefObject<HTMLDivElement | null> }) {
   const { fitView } = useReactFlow();
@@ -56,7 +74,7 @@ function FitOnResize({ container }: { container: RefObject<HTMLDivElement | null
     let frame = 0;
     const observer = new ResizeObserver(() => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => void fitView({ padding: '12%' }));
+      frame = requestAnimationFrame(() => void fitView(initialFitOptions));
     });
     observer.observe(container.current);
     return () => {
@@ -131,10 +149,10 @@ export default function GraphPage() {
       <div className="page-heading">
         <div>
           <h1>
-            <Sprout />
-            发现物品之间的联系
+            <PixelMap />
+            物品图谱
           </h1>
-          <p>从一颗种子开始，找到它的生长、加工与献祭用途。</p>
+          <p>探索物品的生长、加工与献祭关系</p>
         </div>
         <div className="segmented">
           <button
@@ -223,39 +241,41 @@ export default function GraphPage() {
         </div>
       )}
       {searchQuery.error && <ErrorState error={searchQuery.error} />}
-      {example && (
-        <div className="example-note">
-          <span>交互示例 · 来自设计稿，不属于当前知识库，不能用作回答依据。</span>
-          <button
-            className="text-link"
-            onClick={() => {
-              update({ example: null, id: null, relation: null });
-              setSelected(null);
-            }}
-          >
-            退出示例
-          </button>
+      <div className="graph-context">
+        {example && (
+          <div className="example-note">
+            <span>交互示例 · 非知识库数据，不用于回答</span>
+            <button
+              className="text-link"
+              onClick={() => {
+                update({ example: null, id: null, relation: null });
+                setSelected(null);
+              }}
+            >
+              退出示例
+            </button>
+          </div>
+        )}
+        <div className="graph-legend">
+          <span>
+            <i className="green" />
+            生长
+          </span>
+          <span>
+            <i className="gold" />
+            加工
+          </span>
+          <span>
+            <i className="blue" />
+            献祭
+          </span>
+          <small>连线箭头表示关系方向</small>
         </div>
-      )}
-      <div className="graph-legend">
-        <span>
-          <i className="green" />
-          生长
-        </span>
-        <span>
-          <i className="gold" />
-          加工
-        </span>
-        <span>
-          <i className="blue" />
-          献祭
-        </span>
-        <small>连线箭头表示关系方向</small>
       </div>
       {!example && !boot?.snapshot ? (
         <div className="graph-empty">
           <EmptyState
-            icon={<Network size={46} />}
+            icon={<PixelMap size={64} />}
             title="物品之间的故事，等待展开"
             action={
               <div className="button-row">
@@ -299,14 +319,14 @@ export default function GraphPage() {
           ) : (
             <div className="flow-canvas" ref={canvas}>
               <ReactFlow
-                key={`${data.snapshot_id}:${center}:${filter}:${Boolean(entity)}`}
+                key={`${data.snapshot_id}:${center}:${filter}`}
                 forceColorMode="light"
                 nodes={displayNodes}
                 edges={layout.edges}
                 nodeTypes={nodeTypes}
                 onNodesChange={onNodesChange}
                 fitView
-                fitViewOptions={{ padding: '12%' }}
+                fitViewOptions={initialFitOptions}
                 minZoom={0.25}
                 maxZoom={2}
                 nodesConnectable={false}
@@ -323,7 +343,7 @@ export default function GraphPage() {
                 }}
               >
                 <FitOnResize container={canvas} />
-                <Background gap={22} size={1.2} color="#d7c3a0" />
+                <Background gap={24} size={1} color="#dfd4bd" />
                 <Controls showInteractive={false} />
               </ReactFlow>
               <div className="canvas-hint">单击选择物品 · 双击展开关联 · 拖动与缩放</div>
@@ -339,7 +359,9 @@ export default function GraphPage() {
                 <X size={19} />
               </button>
               <div className="entity-heading">
-                <span className="entity-icon">{entityIcons[entity.type] || '📗'}</span>
+                <span className="entity-icon">
+                  <EntityIcon type={entity.type} />
+                </span>
                 <div>
                   <h2>{entity.name}</h2>
                   <p>{typeLabels[entity.type] || entity.type}</p>

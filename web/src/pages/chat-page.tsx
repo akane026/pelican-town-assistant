@@ -69,7 +69,7 @@ function Conversation({ taskId, mode }: { taskId?: string; mode: ExecutionMode }
 
   async function ensureTask(): Promise<Task> {
     if (task) return task;
-    if (!boot?.snapshot) throw new Error('还没有导入知识库，请先到「知识管理」查看准备步骤。');
+    if (!boot?.snapshot) throw new Error('还没有导入知识库，请先到「审核与发布」查看准备步骤。');
     return api<Task>('/task', { mode });
   }
 
@@ -143,7 +143,7 @@ function Conversation({ taskId, mode }: { taskId?: string; mode: ExecutionMode }
           {messages.length === 0 && (
             <div className="small-empty">
               <Sprout />
-              <p>笔记已经打开，说说你的农场问题吧。</p>
+              <p>输入你的农场问题</p>
             </div>
           )}
           {messages.map((message, index) => (
@@ -323,33 +323,23 @@ function Conversation({ taskId, mode }: { taskId?: string; mode: ExecutionMode }
           </div>
         </form>
         {welcome && (
-          <>
-            <div className="prompt-grid">
-              {prompts.map(({ label, icon: Icon, text }) => (
-                <button
-                  key={label}
-                  className="prompt-chip"
-                  onClick={() => {
-                    setDraft(text);
-                    input.current?.focus();
-                  }}
-                >
-                  <Icon size={24} />
-                  {label}
-                </button>
-              ))}
-            </div>
-            <p className="welcome-footnote">答案可展开查看来源原文与计算过程</p>
-          </>
+          <div className="prompt-grid">
+            {prompts.map(({ label, icon: Icon, text }) => (
+              <button
+                key={label}
+                className="prompt-chip"
+                onClick={() => {
+                  setDraft(text);
+                  input.current?.focus();
+                }}
+              >
+                <Icon size={24} />
+                {label}
+              </button>
+            ))}
+          </div>
         )}
       </div>
-      <footer className="farm-footer">
-        <span />
-        <SproutIcon size={16} />
-        不会修改游戏存档
-        <SproutIcon size={16} />
-        <span />
-      </footer>
       <RecordDrawer id={recordId} taskId={taskId} onClose={() => setRecordId(null)} />
     </div>
   );

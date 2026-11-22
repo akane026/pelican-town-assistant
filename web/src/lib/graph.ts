@@ -21,7 +21,7 @@ export function layoutGraph(
   const entities = data.nodes.filter((entity) => !filter || included.has(entity.id));
   const ids = new Set(entities.map((entity) => entity.id));
   const graph = new dagre.graphlib.Graph({ multigraph: true }).setDefaultEdgeLabel(() => ({}));
-  graph.setGraph({ rankdir: 'LR', nodesep: 85, ranksep: 160, marginx: 45, marginy: 45 });
+  graph.setGraph({ rankdir: 'LR', nodesep: 48, ranksep: 112, marginx: 32, marginy: 32 });
   entities.forEach((entity) => graph.setNode(entity.id, { width: 180, height: 76 }));
   const visible = relations.filter((edge) => ids.has(edge.subject) && ids.has(edge.object));
   visible.forEach((edge) => graph.setEdge(edge.subject, edge.object, {}, edge.id));

@@ -10,6 +10,8 @@ from .state import TaskStore
 from .agent import Agent
 from .model import ModelClient
 from .providers import ChatECNU
+from .library import LibraryStore
+from .auth import AuthStore
 from .online_vision import ImageStore,VisualMatcher
 from .retrieval import Retriever
 from .rules import RULES,rule_audit,record_rule_review,rule_fingerprint,dependencies
@@ -41,7 +43,7 @@ def frontend_file(request_path):
         return candidate
     # Only application routes receive the SPA shell; missing assets stay 404.
     route = relative.split('/')[0]
-    if not relative or route in {'chat', 'graph', 'plans', 'knowledge'}:
+    if not relative or route in {'chat', 'graph', 'plans', 'knowledge', 'library', 'login'}:
         if '.' not in relative and (root / 'index.html').is_file():
             return root / 'index.html'
     return None
@@ -49,6 +51,7 @@ def frontend_file(request_path):
 class Workbench:
     def __init__(self):
         self.token=secrets.token_urlsafe(32);self.tasks=TaskStore();self.images=ImageStore();self.jobs={};self.lock=threading.Lock()
+        self.library = LibraryStore()
     def snapshot(self):return Snapshot(allow_candidate=True)
     def reviews(self,s):
         p=DATA/'reviews'/(s.id+'.json')
@@ -72,6 +75,10 @@ class Workbench:
             job=threading.Thread(target=run,daemon=True);self.jobs[task_id]=job;job.start()
         return {'status':'ACCEPTED','task_id':task_id}
     def get(self,path,q):
+        if path == '/api/library':
+            return self.library.list(q.get('q', ''), q.get('kind', ''), q.get('offset', 0))
+        if path == '/api/library/source':
+            return self.library.get(q['id'])
         if path=='/api/bootstrap':
             try:
                 manifest=self.snapshot().manifest
@@ -130,6 +137,12 @@ class Workbench:
             return content
         raise ValidationError('ROUTE_NOT_FOUND')
     def post(self,path,d,*,api_key=None):
+        if path == '/api/library/create':
+            return self.library.create(d)
+        if path == '/api/library/update':
+            return self.library.update(d['id'], d['revision'], d['title'], d['content'])
+        if path == '/api/library/delete':
+            return self.library.delete(d['id'], d['revision'])
         if path=='/api/task':
             mode=d.get('mode','candidate_diagnostic')
             if mode not in ('candidate_diagnostic','released'):raise ValidationError('INVALID_MODE')
@@ -160,7 +173,7 @@ class Workbench:
             if d.get('snapshot_id')!=s.id:raise ValidationError('REVIEW_SNAPSHOT_MISMATCH')
             if not any(d['id'] in s.records[k] for k in ('facts','relations','alignments')):raise ValidationError('UNKNOWN_REVIEW_RECORD')
             if d.get('action') not in ('approve','reject','defer') or not str(d.get('reason','')).strip():raise ValidationError('REVIEW_REASON_REQUIRED')
-            review=self.reviews(s);record={'id':d['id'],'action':d['action'],'reason':d['reason'],'actor':'local_user','at':now(),'via':'same_origin_workbench'}
+            review=self.reviews(s);record={'id':d['id'],'action':d['action'],'reason':d['reason'],'actor':'local_user','at':now(),'via':'same_origin_workbench','reviewer_id':d.get('reviewer_id')}
             review['decisions']=[x for x in review['decisions'] if x['id']!=record['id']]+[record];write(DATA/'reviews'/(s.id+'.json'),review)
             append(ARTIFACTS/'review/actions.jsonl',{'snapshot_id':s.id,**record});return record
         if path=='/api/publish':
@@ -177,27 +190,50 @@ class Workbench:
 
 def make_server(host='127.0.0.1',port=8765):
     if host not in ('127.0.0.1','localhost'):raise ValidationError('LOOPBACK_ONLY')
-    app=Workbench()
+    app=Workbench();auth=AuthStore();login_attempts=[];login_lock=threading.Lock()
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*a):pass
-        def reply(self,status,body,ctype='application/json; charset=utf-8'):
+        def reply(self,status,body,ctype='application/json; charset=utf-8',cookie=None):
             data=body if isinstance(body,bytes) else (body if isinstance(body,str) else canonical(body)).encode()
             self.send_response(status);self.send_header('Content-Type',ctype);self.send_header('Content-Length',str(len(data)))
             self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff')
             # React Flow and Radix position elements with inline styles. Scripts
             # remain same-origin only; no inline JavaScript is allowed.
             self.send_header('Content-Security-Policy',"default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'")
+            if cookie:self.send_header('Set-Cookie',cookie)
             self.end_headers();self.wfile.write(data)
         def safe_host(self):
             return self.headers.get('Host','') in (f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}')
+        def authorize(self,path,values,write=False):
+            user=auth.user(self.headers.get('Cookie'))
+            if not user:
+                self.reply(401,{'error':'AUTH_REQUIRED'});return None
+            if path in {'/api/review','/api/publish','/api/rule-review','/api/evaluations'} and user['role']!='admin':
+                self.reply(403,{'error':'ADMIN_REQUIRED'});return None
+            tid=values.get('task_id') or (values.get('id') if path in {'/api/task','/api/export'} and not write else None)
+            if tid and not auth.allowed('task',tid,user):
+                self.reply(403,{'error':'RESOURCE_DENIED'});return None
+            if write and path in {'/api/library/update','/api/library/delete'} and not auth.allowed('source',values.get('id'),user):
+                self.reply(403,{'error':'RESOURCE_DENIED'});return None
+            return user
         def do_GET(self):
             if not self.safe_host():return self.reply(403,{'error':'HOST_DENIED'})
             p=urlparse(self.path);q={k:v[0] for k,v in parse_qs(p.query).items()}
             try:
+                if p.path=='/api/auth':
+                    return self.reply(200,{'user':auth.user(self.headers.get('Cookie')),'setup':auth.needs_setup(),'csrf':app.token})
+                user=None
+                if p.path.startswith('/api/'):
+                    user=self.authorize(p.path,q)
+                    if not user:return
                 if p.path=='/api/image':
                     f=app.image(q);return self.reply(200,f.read_bytes(),mimetypes.guess_type(f.name)[0] or 'image/png')
                 if p.path.startswith('/api/'):
-                    r=app.get(p.path,q);return self.reply(200,r,'text/markdown; charset=utf-8' if isinstance(r,str) else 'application/json; charset=utf-8')
+                    r=app.get(p.path,q)
+                    if p.path=='/api/bootstrap':
+                        r['tasks']=[t for t in r['tasks'] if auth.allowed('task',t['task_id'],user)]
+                        if user['role']!='admin':r['rules']=[]
+                    return self.reply(200,r,'text/markdown; charset=utf-8' if isinstance(r,str) else 'application/json; charset=utf-8')
                 if not (FRONTEND_DIST / 'index.html').is_file():
                     return self.reply(503, '前端尚未构建。请在 web 目录运行 npm ci 和 npm run build，然后刷新。', 'text/plain; charset=utf-8')
                 f = frontend_file(p.path)
@@ -216,7 +252,26 @@ def make_server(host='127.0.0.1',port=8765):
                 if not isinstance(d,dict):raise ValidationError('JSON_OBJECT_REQUIRED')
                 authorization = self.headers.get('Authorization', '')
                 api_key = authorization[7:] if authorization.startswith('Bearer ') else None
-                self.reply(200,app.post(urlparse(self.path).path,d,api_key=api_key))
+                path=urlparse(self.path).path
+                if path in {'/api/auth/login','/api/auth/register'}:
+                    import time
+                    with login_lock:
+                        login_attempts[:]=[t for t in login_attempts if time.monotonic()-t<60]
+                        if len(login_attempts)>=20:return self.reply(429,{'error':'尝试次数过多，请一分钟后重试'})
+                        login_attempts.append(time.monotonic())
+                    if path!='/api/auth/login':auth.register(d.get('username'),d.get('password'),setup=False)
+                    token=auth.login(d.get('username'),d.get('password'))
+                    return self.reply(200,{'status':'OK'},cookie=f'pelican_session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800')
+                user=self.authorize(path,d,write=True)
+                if not user:return
+                if path=='/api/auth/logout':
+                    auth.logout(self.headers.get('Cookie'))
+                    return self.reply(200,{'status':'OK'},cookie='pelican_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
+                if path=='/api/review':d['reviewer_id']=user['id']
+                result=app.post(path,d,api_key=api_key)
+                if path=='/api/task':auth.own('task',result['task_id'],user)
+                if path=='/api/library/create':auth.own('source',result['id'],user)
+                self.reply(200,result)
             except (ValueError,KeyError,TypeError,OSError) as exc:self.reply(400,{'error':str(exc)[:250],'type':type(exc).__name__})
     server=ThreadingHTTPServer((host,port),Handler);server.app=app;return server
 

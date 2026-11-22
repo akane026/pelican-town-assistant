@@ -1,26 +1,27 @@
 import { useState } from 'react';
-import { setApiKey, useHasApiKey } from '@/lib/credentials';
+import { Eye, EyeOff } from 'lucide-react';
+import { setApiKey, useApiKey } from '@/lib/credentials';
 import { errorMessage } from '@/lib/api';
 import { Button } from './ui/button';
 
 export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
-  const configured = useHasApiKey();
-  const [draft, setDraft] = useState('');
+  const savedKey = useApiKey();
+  const configured = Boolean(savedKey);
+  // null follows the saved value; typing creates an unsaved draft.
+  const [draft, setDraft] = useState<string | null>(null);
+  const value = draft ?? savedKey;
+  const [visible, setVisible] = useState(false);
   const [error, setError] = useState('');
   return (
     <section aria-labelledby="connection-heading" className="connection-settings">
-      <h3 id="connection-heading">连接与隐私</h3>
-      <p className="muted" role="status">
-        {configured
-          ? '已在当前浏览器中保存密钥，可随时更换或清除。'
-          : '首次使用，请填写你自己的 ChatECNU API 密钥。'}
-      </p>
+      <h3 id="connection-heading">模型连接</h3>
       <form
         onSubmit={(event) => {
           event.preventDefault();
           try {
-            setApiKey(draft);
-            setDraft('');
+            setApiKey(value);
+            setDraft(null);
+            setVisible(false);
             setError('');
             onSaved();
           } catch (reason) {
@@ -29,27 +30,37 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
         }}
       >
         <label htmlFor="model-api-key">ChatECNU API 密钥</label>
-        <input
-          id="model-api-key"
-          type="password"
-          value={draft}
-          onChange={(event) => {
-            setDraft(event.target.value);
-            setError('');
-          }}
-          placeholder={configured ? '输入新密钥以更换' : '输入你的 API 密钥'}
-          autoComplete="off"
-          autoCapitalize="none"
-          spellCheck={false}
-          maxLength={512}
-          required
-          aria-describedby="credential-privacy"
-          aria-invalid={Boolean(error)}
-        />
+        <div className="credential-input">
+          <input
+            id="model-api-key"
+            type={visible ? 'text' : 'password'}
+            value={value}
+            onChange={(event) => {
+              setDraft(event.target.value);
+              setError('');
+            }}
+            placeholder="输入你的 API 密钥"
+            autoComplete="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            maxLength={512}
+            required
+            aria-invalid={Boolean(error)}
+          />
+          <button
+            type="button"
+            className="icon-button credential-visibility"
+            aria-label={visible ? '隐藏密钥' : '显示密钥'}
+            aria-pressed={visible}
+            onClick={() => setVisible(!visible)}
+          >
+            {visible ? <EyeOff size={19} /> : <Eye size={19} />}
+          </button>
+        </div>
         {error && <p role="alert">{error}</p>}
         <div className="button-row">
-          <Button className="town-button" disabled={!draft.trim()}>
-            保存并返回
+          <Button className="town-button" disabled={!value.trim()}>
+            保存密钥并返回
           </Button>
           {configured && (
             <Button
@@ -58,7 +69,8 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
               onClick={() => {
                 try {
                   setApiKey('');
-                  setDraft('');
+                  setDraft(null);
+                  setVisible(false);
                   setError('');
                 } catch (reason) {
                   setError(errorMessage(reason));
@@ -70,10 +82,6 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
           )}
         </div>
       </form>
-      <p className="muted" id="credential-privacy">
-        密钥保存在当前浏览器的本地存储中，刷新或重新打开同一地址后仍可使用。点击「清除密钥」或清除网站数据后删除。提问时交给本机后端临时调用
-        ChatECNU，不写入配置文件或对话记录。保存不会发起模型调用。
-      </p>
     </section>
   );
 }

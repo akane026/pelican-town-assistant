@@ -1,3 +1,4 @@
+import { accountStorageKey } from './account';
 import { useSyncExternalStore } from 'react';
 
 export const CREDENTIAL_KEY = 'pelican:chatecnu-key:v1';
@@ -5,7 +6,7 @@ const listeners = new Set<() => void>();
 
 function readApiKey() {
   try {
-    const key = localStorage.getItem(CREDENTIAL_KEY) || '';
+    const key = localStorage.getItem(accountStorageKey(CREDENTIAL_KEY)) || '';
     return /^[\x21-\x7e]{1,512}$/.test(key) ? key : '';
   } catch {
     return '';
@@ -17,7 +18,7 @@ function subscribe(listener: () => void) {
   const onStorage = (event: StorageEvent) => {
     if (
       event.storageArea === localStorage &&
-      (event.key === CREDENTIAL_KEY || event.key === null)
+      (event.key === accountStorageKey(CREDENTIAL_KEY) || event.key === null)
     ) {
       listener();
     }
@@ -33,8 +34,8 @@ export function hasApiKey() {
   return Boolean(readApiKey());
 }
 
-export function useHasApiKey() {
-  return useSyncExternalStore(subscribe, hasApiKey);
+export function useApiKey() {
+  return useSyncExternalStore(subscribe, readApiKey);
 }
 
 export function setApiKey(value: string) {
@@ -43,8 +44,8 @@ export function setApiKey(value: string) {
     throw new Error('密钥格式不正确，请检查是否包含空格或多余字符。');
   }
   try {
-    if (key) localStorage.setItem(CREDENTIAL_KEY, key);
-    else localStorage.removeItem(CREDENTIAL_KEY);
+    if (key) localStorage.setItem(accountStorageKey(CREDENTIAL_KEY), key);
+    else localStorage.removeItem(accountStorageKey(CREDENTIAL_KEY));
   } catch {
     throw new Error('浏览器无法保存或清除密钥，请检查网站存储权限或可用空间。');
   }

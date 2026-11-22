@@ -1,6 +1,7 @@
 import { createContext, useContext, useRef, useState, useEffect, type ReactNode } from 'react';
 import { AlertCircle, LoaderCircle, X } from 'lucide-react';
 import { errorMessage } from '@/lib/api';
+import { Sprout } from './pixel-art';
 
 const FeedbackContext = createContext<(message: string) => void>(() => {});
 
@@ -88,7 +89,7 @@ export function EmptyState({
 }) {
   return (
     <div className="empty-state">
-      <div className="empty-icon">{icon || '🌱'}</div>
+      <div className="empty-icon">{icon || <Sprout />}</div>
       <h2>{title}</h2>
       <p>{children}</p>
       {action}

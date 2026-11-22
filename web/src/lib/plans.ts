@@ -1,3 +1,4 @@
+import { accountStorageKey } from './account';
 import type { Task, JsonObject } from './types';
 
 export interface SavedPlan {
@@ -14,7 +15,7 @@ export const PLANS_KEY = 'pelican:plans:v1';
 
 export function readPlans(): SavedPlan[] {
   try {
-    const stored: unknown = JSON.parse(localStorage.getItem(PLANS_KEY) || '[]');
+    const stored: unknown = JSON.parse(localStorage.getItem(accountStorageKey(PLANS_KEY)) || '[]');
     if (!Array.isArray(stored)) return [];
     return stored.filter((row): row is SavedPlan =>
       Boolean(
@@ -36,7 +37,7 @@ export function readPlans(): SavedPlan[] {
 }
 export function writePlans(plans: SavedPlan[]) {
   try {
-    localStorage.setItem(PLANS_KEY, JSON.stringify(plans));
+    localStorage.setItem(accountStorageKey(PLANS_KEY), JSON.stringify(plans));
   } catch {
     throw new Error('浏览器无法保存计划，请检查存储权限或可用空间。');
   }

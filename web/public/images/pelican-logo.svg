@@ -1,0 +1,16 @@
+<svg
+      class="login-logo pixel-art"
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 36"
+      aria-hidden="true"
+      shape-rendering="crispEdges"
+    >
+      <path fill="#684424" d="M15 2h9v2h2v6h-2v7h-3v3h2v9h-4v3H4v-3H2v-6h3v-3h4v-4h4V5h2z" />
+      <path fill="#fffbe7" d="M16 4h7v7h-3v8h-3v3h3v6h-3v2H5v-3H4v-3h5v-4h5V8h2z" />
+      <path fill="#e8d8ab" d="M6 25h4v-3h5v4h-3v3H6z" />
+      <path
+        fill="#b97630"
+        d="M22 8h5v2h4v4h-8v-2h-2zM8 32h3v2h5v2H6v-2h2zM17 32h3v2h5v2H15v-2h2z"
+      />
+      <path fill="#f6b744" d="M23 9h4v2h3v2h-7z" />
+      <path fill="#392b20" d="M20 6h2v2h-2z" />
+    </svg>

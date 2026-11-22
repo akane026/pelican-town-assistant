@@ -383,20 +383,6 @@ pre {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.local-note {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 12px 14px 0;
-  color: var(--muted);
-  font-size: 0.6875rem;
-}
-.local-note span {
-  width: 6px;
-  height: 6px;
-  background: #6d8c45;
-  border-radius: 50%;
-}
 .main-shell {
   min-width: 0;
   min-height: 0;
@@ -668,30 +654,6 @@ main {
   background: #eaf0d1;
   border-color: #bdc795;
 }
-.welcome-footnote {
-  margin-top: 16px;
-  text-align: center;
-  color: #8a755c;
-  font-size: 0.875rem;
-}
-.farm-footer {
-  flex-shrink: 0;
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-  color: #7a6347;
-  font-size: 0.75rem;
-  margin-top: auto;
-  padding: 24px 0 18px;
-}
-.farm-footer > span {
-  width: min(16vw, 170px);
-  border-top: 1px solid #d3ab7e;
-}
-.farm-footer svg {
-  color: #658a39;
-}
 .conversation-header {
   display: flex;
   align-items: center;
@@ -728,9 +690,6 @@ main {
 .active-chat .composer textarea {
   min-height: 56px;
   font-size: 1rem;
-}
-.active-chat .farm-footer {
-  padding-top: 15px;
 }
 .message {
   margin: 20px 0 24px;
@@ -2056,21 +2015,6 @@ main {
     padding: 12px 9px;
     gap: 10px;
   }
-  .welcome-footnote {
-    font-size: 0.75rem;
-    margin-top: 19px;
-  }
-  .farm-footer {
-    gap: 9px;
-    font-size: 0.625rem;
-    padding: 35px 0 20px;
-  }
-  .farm-footer svg {
-    width: 13px;
-  }
-  .farm-footer > span {
-    width: 35px;
-  }
   .conversation-header {
     flex-wrap: wrap;
     gap: 10px;
@@ -2341,9 +2285,6 @@ main {
   }
   .welcome-page .prompt-grid {
     margin-top: 20px;
-  }
-  .welcome-page .farm-footer {
-    padding-top: 18px;
   }
 }
 
@@ -2635,4 +2576,368 @@ main {
   right: 7px;
   top: 50%;
   transform: translateY(-50%);
+}
+/* Login: official spring scenery, paper and a standalone pelican mark. */
+.login-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(400px, 1fr);
+  height: 100dvh;
+  min-height: 600px;
+  background: #fff8e9;
+  overflow: auto;
+}
+.login-landscape {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: #558546;
+}
+.login-landscape img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: 57% center;
+  image-rendering: pixelated;
+}
+.login-landscape:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 12px solid #50351c66;
+  box-shadow: inset 0 0 0 2px #f6d98f77;
+  pointer-events: none;
+}
+.login-panel {
+  display: grid;
+  place-items: center;
+  padding: 48px;
+  border-left: 6px solid #b1824d;
+  box-shadow: inset 2px 0 #eed5a6;
+}
+.login-form-wrap {
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+}
+.login-logo {
+  display: block;
+  width: 112px;
+  height: 126px;
+  margin: 0 auto 20px;
+  image-rendering: pixelated;
+}
+.login-name {
+  font-size: 28px;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0 0 40px;
+  letter-spacing: 2px;
+}
+.login-form {
+  display: grid;
+  gap: 20px;
+  text-align: left;
+}
+.login-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fffdf6;
+  border: 1px solid #cfb991;
+  border-radius: 6px;
+  box-shadow: 0 2px 0 #eadbc0;
+  min-width: 0;
+}
+.login-field > svg {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  color: #8c704b;
+}
+.login-field input {
+  width: 100%;
+  height: 52px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 16px 0 48px;
+  background: transparent;
+  color: #493724;
+  outline: none;
+  min-width: 0;
+}
+.login-field:focus-within {
+  outline: 2px solid #647d38;
+  outline-offset: 3px;
+}
+.login-field input::placeholder {
+  color: #85735d;
+}
+.login-submit {
+  height: 52px;
+  width: 100%;
+  border: 2px solid #426023;
+  border-radius: 6px;
+  background: #587a32;
+  color: #fffbed;
+  box-shadow: 0 3px 0 #38551c;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  letter-spacing: 4px;
+}
+.login-submit:hover {
+  background: #48682a;
+}
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.login-switch {
+  display: block;
+  margin: 20px auto 0;
+  background: none;
+  border: 0;
+  color: #746344;
+  cursor: pointer;
+  font-size: 13px;
+  min-height: 32px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.login-error {
+  margin: 0;
+  color: #9b402c;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.login-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 32px auto 0;
+  color: #789347;
+}
+.login-ornament:before,
+.login-ornament:after {
+  content: '';
+  height: 1px;
+  width: 48px;
+  background: #ddcbaa;
+}
+.login-ornament svg {
+  width: 24px;
+  height: 24px;
+}
+@media (max-width: 800px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100dvh;
+    grid-template-rows: 200px 1fr;
+  }
+  .login-panel {
+    border-left: 0;
+    border-top: 4px solid #b1824d;
+    padding: 32px 24px 40px;
+  }
+  .login-landscape img {
+    object-position: 57% 43%;
+  }
+  .login-logo {
+    width: 80px;
+    height: 90px;
+    margin-bottom: 16px;
+  }
+  .login-name {
+    font-size: 24px;
+    margin-bottom: 28px;
+  }
+  .login-ornament {
+    margin-top: 24px;
+  }
+}
+@media (max-height: 700px) and (min-width: 801px) {
+  .login-panel {
+    padding: 24px 40px;
+  }
+  .login-logo {
+    width: 88px;
+    height: 99px;
+    margin-bottom: 16px;
+  }
+  .login-name {
+    margin-bottom: 28px;
+  }
+}
+/* Quiet account chrome; the pixel portrait belongs to the farm. */
+.account-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  text-align: left;
+  background: transparent;
+}
+.account-trigger:hover,
+.account-trigger[data-state='open'] {
+  background: #f0e7d3;
+  border-color: #deceb1;
+}
+.farmer-avatar {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #b8bd94;
+  border-radius: 8px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+.account-username {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+}
+.account-trigger > svg:last-child {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.account-menu {
+  z-index: 80;
+  min-width: 208px;
+  max-width: calc(100vw - 32px);
+  padding: 4px;
+  background: var(--paper);
+  border: 1px solid #cbb798;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px #00000014;
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+.account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.account-menu-item svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.5;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.account-menu-item[data-highlighted] {
+  background: var(--leaf-light);
+  color: #344b1e;
+}
+.account-menu-item[data-disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.account-menu-logout {
+  color: #943e2b;
+}
+.account-menu-logout svg {
+  color: inherit;
+}
+.account-menu-logout[data-highlighted] {
+  background: #f4e3d9;
+  color: #843421;
+}
+.account-menu-separator {
+  height: 1px;
+  background: #e2d4be;
+  margin: 4px 8px;
+}
+.town-dialog.account-dialog {
+  width: min(400px, calc(100vw - 32px));
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+}
+.account-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.account-profile .farmer-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+.account-profile strong {
+  font-size: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.account-details {
+  margin: 0;
+  display: grid;
+  gap: 0;
+  font-size: 14px;
+}
+.account-details > div {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid #e2d4be;
+}
+.account-details dt {
+  color: var(--muted);
+}
+.account-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.settings-dialog .connection-settings {
+  gap: 16px;
+}
+.settings-dialog .settings-section {
+  gap: 12px;
+}
+.settings-dialog .connection-settings label {
+  font-size: 14px;
+}
+@media (max-width: 800px) {
+  .account-menu-item {
+    min-height: 44px;
+  }
+  .account-trigger {
+    min-height: 56px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .account-menu[data-state='open'] {
+    animation: account-appear 140ms ease-out;
+  }
+  @keyframes account-appear {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

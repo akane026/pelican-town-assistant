@@ -41,7 +41,6 @@ export function TaskConditions({ task, onSaved }: { task: Task; onSaved?: () => 
         });
       }}
     >
-      <p className="muted">只填写你确定的信息。更改条件后，旧计算结果会失效。</p>
       {!advanced ? (
         <div className="form-grid">
           <label>
@@ -148,7 +147,7 @@ export function Settings({
       <DialogContent className="town-dialog settings-dialog">
         <DialogHeader>
           <DialogTitle>农场设置</DialogTitle>
-          <DialogDescription>管理连接、知识版本和游戏条件</DialogDescription>
+          <DialogDescription className="sr-only">模型连接、知识版本与游戏条件</DialogDescription>
         </DialogHeader>
         <ConnectionSettings onSaved={onClose} />
         <hr />
@@ -163,19 +162,13 @@ export function Settings({
               </option>
             </select>
           </label>
-          <p className="muted">候选知识尚未审核，正式计算请选择已审核知识。此设置只影响新对话。</p>
+          <p className="muted">仅用于新对话</p>
         </section>
         <hr />
         <section className="settings-section" aria-labelledby="game-conditions-heading">
           <h3 id="game-conditions-heading">当前游戏条件</h3>
-          {data ? (
-            <TaskConditions task={data.task} />
-          ) : (
-            <p className="muted">开始对话后可设置日期、品质和职业，也可以直接告诉助手。</p>
-          )}
+          {data ? <TaskConditions task={data.task} /> : <p className="muted">暂无进行中的对话</p>}
         </section>
-        <hr />
-        <p className="muted">本工具不会读取或修改你的游戏存档。计划仅保存在当前浏览器。</p>
         {data && (
           <JsonDetails
             title="当前任务版本"

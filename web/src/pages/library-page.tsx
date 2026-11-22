@@ -30,7 +30,6 @@ export default function LibraryPage() {
           <h1>
             <PixelBook /> 知识资料
           </h1>
-          <p>把农场资料收进书架，随时翻阅与整理。</p>
         </div>
         <Button className="town-button library-add-button" onClick={() => setImportOpen(true)}>
           <Plus size={18} /> 添加资料
@@ -59,7 +58,7 @@ function SourceList({ onImport }: { onImport: () => void }) {
   return (
     <>
       <div className="library-notice">
-        资料保存在本机。新增、修改或删除资料后，需要重新构建知识快照才会影响回答。
+        资料变更后需重新构图，才会用于回答
         <Link to="/knowledge">构图、审核与发布 →</Link>
       </div>
       <form
@@ -268,9 +267,6 @@ function SourceReader({ source }: { source: LibraryDetail }) {
                 spellCheck={false}
               />
             </label>
-            <p className="muted">
-              修改的是本地副本，不会修改原网站。HTML 可在保存后切换「正文」查看。
-            </p>
             <div className="button-row">
               <Button className="town-button" disabled={pending}>
                 {pending ? '保存中…' : '保存修改'}

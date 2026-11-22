@@ -112,9 +112,7 @@ export function LibraryImport({ onClose }: { onClose: () => void }) {
               <small>公开 HTTPS 网页，保存当前正文；不支持登录页面、内网或需脚本加载的正文。</small>
             </label>
           )}
-          <p className="library-notice">
-            上传后状态为「待构图」，暂不进入问答。原文预览不会执行网页脚本，也不会调用模型。
-          </p>
+          <p className="library-notice">上传后待构图，暂不用于问答</p>
           <div className="button-row">
             <Button className="town-button" disabled={pending}>
               {pending ? '正在导入…' : '保存资料'}

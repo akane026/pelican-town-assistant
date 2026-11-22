@@ -32,7 +32,6 @@ export default function PlansPage() {
             <PixelCalendar />
             我的农场计划
           </h1>
-          <p>保存当时的条件和回答，放在一起比较，再决定怎么做。</p>
         </div>
         <Link className="town-button" to="/chat">
           <Plus size={18} />
@@ -41,7 +40,7 @@ export default function PlansPage() {
       </div>
       <div className="plan-notice">
         <ClipboardList size={19} />
-        <span>计划保存在当前浏览器。每份计划独立比较，不会扣减库存或推进游戏日期。</span>
+        <span>计划保存在当前浏览器</span>
       </div>
       {plans.length === 0 ? (
         <EmptyState

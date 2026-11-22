@@ -1,3 +1,5 @@
+import { LoginPage, useAuth } from './components/auth';
+import { AccountMenu, AccountDialog } from './components/account-menu';
 import { lazy, Suspense, useState } from 'react';
 import { NavLink, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import {
@@ -37,8 +39,17 @@ const links = [
   { to: '/plans', label: '我的计划', icon: PixelCalendar },
 ];
 
-function Navigation({ close, settings }: { close: () => void; settings: () => void }) {
+function Navigation({
+  close,
+  settings,
+  account,
+}: {
+  close: () => void;
+  settings: () => void;
+  account: () => void;
+}) {
   const { data } = useBootstrap();
+  const auth = useAuth();
   return (
     <>
       <Link className="brand" to="/chat" onClick={close}>
@@ -62,6 +73,16 @@ function Navigation({ close, settings }: { close: () => void; settings: () => vo
             {label}
           </NavLink>
         ))}
+        {auth.data?.user?.role === 'admin' && (
+          <NavLink
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            to="/knowledge"
+            onClick={close}
+          >
+            <PixelScroll size={24} />
+            审核与发布
+          </NavLink>
+        )}
       </nav>
       <div className="recent">
         <h2>最近对话</h2>
@@ -79,43 +100,33 @@ function Navigation({ close, settings }: { close: () => void; settings: () => vo
             </NavLink>
           ))
         ) : (
-          <p>
-            第一篇农场笔记，
-            <br />
-            从一个问题开始。
-          </p>
+          <p className="muted">暂无对话</p>
         )}
       </div>
       <div className="sidebar-bottom">
-        <NavLink
-          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
-          to="/knowledge"
-          onClick={close}
-        >
-          <PixelScroll size={24} />
-          审核与发布
-        </NavLink>
-        <button
-          className="nav-item"
-          onClick={() => {
-            close();
-            settings();
-          }}
-        >
-          <SettingsIcon size={20} />
-          设置
-        </button>
-        <small className="local-note">
-          <span /> 本机工作台
-        </small>
+        {auth.data?.user && (
+          <AccountMenu
+            user={auth.data.user}
+            onSettings={() => {
+              close();
+              settings();
+            }}
+            onAccount={() => {
+              close();
+              account();
+            }}
+          />
+        )}
       </div>
     </>
   );
 }
 
-export default function App() {
+function WorkbenchApp() {
+  const auth = useAuth();
   const boot = useBootstrap();
   const location = useLocation();
+  const [accountOpen, setAccountOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(() => !hasApiKey());
   const [mode, setMode] = useState<ExecutionMode>('candidate_diagnostic');
@@ -129,7 +140,11 @@ export default function App() {
         跳到主要内容
       </a>
       <aside className="sidebar">
-        <Navigation close={() => {}} settings={() => setSettingsOpen(true)} />
+        <Navigation
+          close={() => {}}
+          settings={() => setSettingsOpen(true)}
+          account={() => setAccountOpen(true)}
+        />
       </aside>
       <div className="main-shell">
         <header className="topbar">
@@ -155,7 +170,9 @@ export default function App() {
           <div className="connection-note">
             <SproutIcon size={16} />
             <span>农场知识库还在等待导入</span>
-            <Link to="/knowledge">查看准备步骤</Link>
+            <Link to={auth.data?.user?.role === 'admin' ? '/knowledge' : '/library'}>
+              查看知识资料
+            </Link>
           </div>
         )}
         <main id="main-content" tabIndex={-1}>
@@ -171,7 +188,16 @@ export default function App() {
                 <Route path="/chat/:taskId" element={<ChatPage mode={mode} />} />
                 <Route path="/graph" element={<GraphPage />} />
                 <Route path="/plans" element={<PlansPage />} />
-                <Route path="/knowledge" element={<KnowledgePage />} />
+                <Route
+                  path="/knowledge"
+                  element={
+                    auth.data?.user?.role === 'admin' ? (
+                      <KnowledgePage />
+                    ) : (
+                      <Navigate to="/library" replace />
+                    )
+                  }
+                />
                 <Route path="/library" element={<LibraryPage />} />
                 <Route path="/library/:sourceId" element={<LibraryPage />} />
                 <Route path="*" element={<Navigate to="/chat" replace />} />
@@ -186,9 +212,20 @@ export default function App() {
             <DialogTitle>农场导航</DialogTitle>
             <DialogDescription>前往助手、图谱、知识资料、计划和审核与发布。</DialogDescription>
           </DialogHeader>
-          <Navigation close={() => setMobileOpen(false)} settings={() => setSettingsOpen(true)} />
+          <Navigation
+            close={() => setMobileOpen(false)}
+            settings={() => setSettingsOpen(true)}
+            account={() => setAccountOpen(true)}
+          />
         </DialogContent>
       </Dialog>
+      {auth.data?.user && (
+        <AccountDialog
+          user={auth.data.user}
+          open={accountOpen}
+          onClose={() => setAccountOpen(false)}
+        />
+      )}
       <Settings
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
@@ -197,4 +234,12 @@ export default function App() {
       />
     </div>
   );
+}
+
+export default function App() {
+  const auth = useAuth();
+  if (auth.isLoading) return <Loading text="正在连接农场…" />;
+  if (auth.error) return <ErrorState error={auth.error} retry={() => void auth.refetch()} />;
+  if (!auth.data?.user) return <LoginPage />;
+  return <WorkbenchApp />;
 }

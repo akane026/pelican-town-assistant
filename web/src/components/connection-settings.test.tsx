@@ -15,7 +15,6 @@ it('persists, replaces and removes a key without network calls', () => {
   const fetcher = vi.spyOn(globalThis, 'fetch');
   const onSaved = vi.fn();
   render(<ConnectionSettings onSaved={onSaved} />);
-  expect(screen.getByRole('status')).toHaveTextContent('首次使用');
   const input = screen.getByLabelText('ChatECNU API 密钥');
   expect(input).toHaveAttribute('type', 'password');
   for (const key of ['synthetic-first-key', 'synthetic-second-key']) {
@@ -23,7 +22,6 @@ it('persists, replaces and removes a key without network calls', () => {
     fireEvent.click(screen.getByRole('button', { name: '保存密钥并返回' }));
     expect(requireApiKey()).toBe(key);
     expect(input).toHaveValue(key);
-    expect(screen.getByRole('status')).toHaveTextContent('已在当前浏览器中保存');
     expect(localStorage.getItem(CREDENTIAL_KEY)).toBe(key);
   }
   fireEvent.click(screen.getByRole('button', { name: '清除密钥' }));
@@ -100,7 +98,6 @@ it('updates settings when another tab clears the credential', () => {
       newValue: null,
     }),
   );
-  expect(screen.getByRole('status')).toHaveTextContent('首次使用');
   expect(screen.queryByRole('button', { name: '清除密钥' })).not.toBeInTheDocument();
 });
 

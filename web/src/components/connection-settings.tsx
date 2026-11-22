@@ -14,12 +14,7 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
   const [error, setError] = useState('');
   return (
     <section aria-labelledby="connection-heading" className="connection-settings">
-      <h3 id="connection-heading">连接与隐私</h3>
-      <p className="muted" role="status">
-        {configured
-          ? '已在当前浏览器中保存密钥，可随时更换或清除。'
-          : '首次使用，请填写你自己的 ChatECNU API 密钥。'}
-      </p>
+      <h3 id="connection-heading">模型连接</h3>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -50,7 +45,6 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
             spellCheck={false}
             maxLength={512}
             required
-            aria-describedby="credential-privacy"
             aria-invalid={Boolean(error)}
           />
           <button
@@ -88,16 +82,6 @@ export function ConnectionSettings({ onSaved }: { onSaved: () => void }) {
           )}
         </div>
       </form>
-      <p className="muted" id="credential-privacy">
-        仅保存在当前浏览器，刷新后仍可使用；保存不会调用模型。
-      </p>
-      <details className="help-details">
-        <summary>密钥如何保存和使用</summary>
-        <p className="muted">
-          密钥存储在当前网站的本地存储中，重新打开同一地址后仍可使用。点击「清除密钥」或清除网站数据可删除。
-          提问时交给本机后端临时调用 ChatECNU，不写入配置文件或对话记录。
-        </p>
-      </details>
     </section>
   );
 }

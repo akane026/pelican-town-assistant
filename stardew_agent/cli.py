@@ -4,6 +4,7 @@ from .core import *
 
 def main(argv=None):
     p=argparse.ArgumentParser(prog='stardew_agent');sub=p.add_subparsers(dest='command',required=True)
+    admin=sub.add_parser('create-admin');admin.add_argument('--username',required=True)
     sub.add_parser('inspect');i=sub.add_parser('ingest');i.add_argument('--manifest',default='configs/corpus.json')
     b=sub.add_parser('build');b.add_argument('--batch',default='baseline');b.add_argument('--mode',choices=['structural','multimodal'],default='multimodal');b.add_argument('--online',action='store_true');b.add_argument('--offline',action='store_true');b.add_argument('--resume',action='store_true');b.add_argument('--visual-limit',type=int,default=4);b.add_argument('--text-limit',type=int,default=2);b.add_argument('--alignment-limit',type=int,default=2)
     for name in ('review-export','snapshot','publish'):
@@ -17,6 +18,14 @@ def main(argv=None):
         if name=='release-audit':q.add_argument('--review')
     a=p.parse_args(argv)
     try:
+        if a.command=='create-admin':
+            from getpass import getpass
+            from .auth import AuthStore
+            password=getpass('Admin password (6-128 characters): ')
+            if password!=getpass('Confirm password: '):raise ValidationError('PASSWORD_CONFIRMATION_MISMATCH')
+            AuthStore().register(a.username,password,setup=True)
+            print('Administrator created. Sign in through the regular login page.')
+            return 0
         if a.command=='serve':
             from .server import serve
             serve(a.host,a.port);return 0

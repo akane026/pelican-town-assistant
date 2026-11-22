@@ -2,6 +2,9 @@ import type { Bootstrap } from './types';
 import { requireApiKey } from './credentials';
 
 const errors: Record<string, string> = {
+  AUTH_REQUIRED: '请先登录账号',
+  ADMIN_REQUIRED: '只有管理员可以审核与发布知识',
+  RESOURCE_DENIED: '你没有权限访问或修改这条记录',
   LIBRARY_NOT_FOUND: '这份资料不存在或已删除，请返回资料列表。',
   LIBRARY_STALE_REVISION: '资料已被其他页面修改或删除，请刷新后重试。',
   LIBRARY_INVALID_URL: '请输入公开 HTTPS 网页地址，不支持账号密码或自定义端口。',
@@ -16,7 +19,7 @@ const errors: Record<string, string> = {
   LIBRARY_INVALID_JSON: 'JSON 文件内容格式不正确，请检查后重新保存。',
   LIBRARY_TITLE_REQUIRED: '请填写 1–160 字的资料名称。',
   LIBRARY_INVALID_FILENAME: '文件名称不合法，请重命名后上传。',
-  API_KEY_REQUIRED: '请先在「设置 → 连接与隐私」中填写你的 ChatECNU API 密钥。',
+  API_KEY_REQUIRED: '请先在「设置 → 模型连接」中填写你的 ChatECNU API 密钥。',
   INVALID_API_KEY: '密钥格式不正确，请在设置中重新填写。',
   NO_RELEASED_SNAPSHOT: '还没有可用的知识库。请先在审核与发布中查看准备步骤。',
   ORIGIN_OR_CSRF_DENIED: '连接会话已过期，请刷新页面后重试。',
@@ -27,6 +30,9 @@ const errors: Record<string, string> = {
 };
 
 let csrf = '';
+export function setCsrf(value: string) {
+  csrf = value;
+}
 
 export function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '操作未完成，请重试。';
@@ -52,6 +58,7 @@ export async function api<T>(path: string, data?: unknown, signal?: AbortSignal)
     throw new Error('未连接到工作台接口，请确认 Python 后端已经启动。');
   }
   const result = await response.json();
+  if (response.status === 401 && path !== '/auth') window.location.assign('/login');
   if (!response.ok)
     throw new Error(errors[result.error] || result.error || `请求失败（${response.status}）`);
   return result as T;
